@@ -100,8 +100,17 @@
 		}, {
 			"path": "pages/plugin/verticalnav",
 			"style": {}
-		}
-	],
+		}, {
+            "path" : "pages/personSection/home",
+            "style" : {}
+        }, {
+            "path" : "pages/community/home",
+            "style" : {}
+        }, {
+            "path" : "pages/common/nav",
+            "style" : {}
+        }
+    ],
 	"globalStyle": {
 		"mp-alipay": {
 			/* 支付宝小程序特有相关 */

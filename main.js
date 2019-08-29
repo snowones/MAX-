@@ -10,8 +10,18 @@ Vue.component('components',components)
 import plugin from './pages/plugin/home.vue'
 Vue.component('plugin',plugin)
 
+import person from './pages/personSection/home.vue'
+Vue.component('person',person)
+
+import community from './pages/community/home.vue'
+Vue.component('community',community)
+
+import navigation from './pages/common/nav.vue'
+Vue.component('navigation',navigation)
+
 import cuCustom from './colorui/components/cu-custom.vue'
 Vue.component('cu-custom',cuCustom)
+
 
 Vue.config.productionTip = false
 
