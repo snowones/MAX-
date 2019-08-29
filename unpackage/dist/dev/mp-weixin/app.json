@@ -25,7 +25,10 @@
     "pages/plugin/indexes",
     "pages/plugin/animation",
     "pages/plugin/drawer",
-    "pages/plugin/verticalnav"
+    "pages/plugin/verticalnav",
+    "pages/personSection/home",
+    "pages/community/home",
+    "pages/common/nav"
   ],
   "subPackages": [],
   "window": {
@@ -35,5 +38,5 @@
     "navigationBarTextStyle": "white"
   },
   "usingComponents": {},
-  "sitemapLocation": "sitemap16.json"
+  "sitemapLocation": "sitemap61.json"
 }
