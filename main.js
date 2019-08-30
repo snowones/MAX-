@@ -16,6 +16,9 @@ Vue.component('person',person)
 import community from './pages/community/home.vue'
 Vue.component('community',community)
 
+import data from './pages/data/home.vue'
+Vue.component('data',data)
+
 import navigation from './pages/common/nav.vue'
 Vue.component('navigation',navigation)
 
