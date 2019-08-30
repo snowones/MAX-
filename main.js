@@ -19,6 +19,9 @@ Vue.component('community',community)
 import data from './pages/data/home.vue'
 Vue.component('data',data)
 
+import find from './pages/find/home.vue'
+Vue.component('find',find)
+
 import navigation from './pages/common/nav.vue'
 Vue.component('navigation',navigation)
 

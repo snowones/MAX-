@@ -120,9 +120,11 @@
         }, {
             "path" : "pages/common/nav",
             "style" : {}
-        }
-        ,{
+        },{
             "path" : "pages/data/home",
+            "style" : {}
+        },{
+            "path" : "pages/find/home",
             "style" : {}
         }
     ],
@@ -153,6 +155,9 @@
 					},{
 						"name": "扩展组件", //模式名称
 						"path": "pages/plugin/home"
+					},{
+						"name": "文章", //模式名称
+						"path": "pages/find/home"
 					}
 		]
 	}

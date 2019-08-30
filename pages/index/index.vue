@@ -4,7 +4,7 @@
 		<person v-if="PageCur=='person'"></person>
 		<data v-if="PageCur=='data'"></data>
 		<components v-if="PageCur=='component'"></components>
-		<plugin v-if="PageCur=='plugin'"></plugin>
+		<find v-if="PageCur=='find'"></find>
 		<community  v-if="PageCur=='community'"></community>
 		<view class="cu-bar tabbar bg-white shadow foot">
 			<view class="action" @click="NavChange" data-cur="person">
@@ -25,11 +25,11 @@
 				</view>
 				<view :class="PageCur=='component'?'text-green':'text-gray'">赛事</view>
 			</view>
-			<view class="action" @click="NavChange" data-cur="plugin">
+			<view class="action" @click="NavChange" data-cur="find">
 				<view class='cuIcon-cu-image'>
-					<image :src="'/static/tabbar/find' + [PageCur == 'plugin'?'_hover':''] + '.png'"></image>
+					<image :src="'/static/tabbar/find' + [PageCur == 'find'?'_hover':''] + '.png'"></image>
 				</view>
-				<view :class="PageCur=='plugin'?'text-green':'text-gray'">发现</view>
+				<view :class="PageCur=='find'?'text-green':'text-gray'">发现</view>
 			</view>
 			<view class="action" @click="NavChange" data-cur="community">
 				<view class='cuIcon-cu-image'>
