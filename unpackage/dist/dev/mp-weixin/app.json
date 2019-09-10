@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/basics/home",
     "pages/basics/layout",
     "pages/basics/background",
     "pages/basics/text",
@@ -12,6 +13,7 @@
     "pages/basics/progress",
     "pages/basics/shadow",
     "pages/basics/loading",
+    "pages/component/home",
     "pages/component/bar",
     "pages/component/nav",
     "pages/component/list",
@@ -22,13 +24,16 @@
     "pages/component/swiper",
     "pages/component/modal",
     "pages/component/steps",
+    "pages/plugin/home",
     "pages/plugin/indexes",
     "pages/plugin/animation",
     "pages/plugin/drawer",
     "pages/plugin/verticalnav",
     "pages/personSection/home",
     "pages/community/home",
-    "pages/common/nav"
+    "pages/common/nav",
+    "pages/data/home",
+    "pages/find/home"
   ],
   "subPackages": [],
   "window": {
@@ -38,5 +43,5 @@
     "navigationBarTextStyle": "white"
   },
   "usingComponents": {},
-  "sitemapLocation": "sitemap61.json"
+  "sitemapLocation": "sitemap99.json"
 }

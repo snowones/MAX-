@@ -35,7 +35,7 @@
 				<view class='cuIcon-cu-image'>
 					<image :src="'/static/tabbar/community' + [PageCur == 'community'?'_hover':''] + '.png'"></image>
 				</view>
-				<view :class="PageCur=='community'?'text-green':'text-gray'">社区</view>
+				<view :class="PageCur=='community'?'text-green':'text-gray'">图库</view>
 			</view>
 		</view>
 	</view>

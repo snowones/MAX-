@@ -31,9 +31,28 @@
 			"list": [
 				{
 					"name": "表单",
-					"query": "",
 					"id": 0,
 					"pathName": "pages/component/form"
+				},
+				{
+					"name": "基础元素",
+					"id": 1,
+					"pathName": "pages/basics/home"
+				},
+				{
+					"name": "交互组件",
+					"id": 2,
+					"pathName": "pages/component/home"
+				},
+				{
+					"name": "扩展组件",
+					"id": 3,
+					"pathName": "pages/plugin/home"
+				},
+				{
+					"name": "文章",
+					"id": 4,
+					"pathName": "pages/find/home"
 				}
 			]
 		}
