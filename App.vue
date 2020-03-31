@@ -1,5 +1,5 @@
 <script>
-	import Vue from 'vue'
+	import Vue from 'vue';
 	export default {
 		onLaunch: function() {
 			uni.getSystemInfo({
@@ -116,6 +116,8 @@
 </script>
 
 <style>
+	
+	@import "iconfont/iconfont.css";
 	@import "colorui/main.css";
 	@import "colorui/icon.css";
 

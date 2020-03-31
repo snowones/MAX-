@@ -3,129 +3,172 @@
 		//pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
 			"path": "pages/index/index",
-			"style": {}
+			"style": {
+			}
 		},
 		{
 			"path": "pages/basics/home",
-			"style": {}
+			"style": {
+			}
 		},
 		{
 			"path": "pages/basics/layout",
-			"style": {}
+			"style": {
+			}
 		},
 		{
 			"path": "pages/basics/background",
-			"style": {}
+			"style": {
+			}
 		},
 		{
 			"path": "pages/basics/text",
-			"style": {}
+			"style": {
+			}
 		},
 		{
 			"path": "pages/basics/icon",
-			"style": {}
+			"style": {
+			}
 		},
 		{
 			"path": "pages/basics/button",
-			"style": {}
+			"style": {
+			}
 		},
 		{
 			"path": "pages/basics/design",
-			"style": {}
+			"style": {
+			}
 		},
 		{
 			"path": "pages/basics/tag",
-			"style": {}
+			"style": {
+			}
 		},
 		{
 			"path": "pages/basics/avatar",
-			"style": {}
+			"style": {
+			}
 		},
 		{
 			"path": "pages/basics/progress",
-			"style": {}
+			"style": {
+			}
 		},
 		{
 			"path": "pages/basics/shadow",
-			"style": {}
+			"style": {
+			}
 		},
 		{
 			"path": "pages/basics/loading",
-			"style": {}
+			"style": {
+			}
 		},
 		{
 			"path": "pages/component/home",
-			"style": {}
+			"style": {
+			}
 		},
 		{
 			"path": "pages/component/bar",
-			"style": {}
+			"style": {
+			}
 		},
 		{
 			"path": "pages/component/nav",
-			"style": {}
+			"style": {
+			}
 		},
 		{
 			"path": "pages/component/list",
-			"style": {}
+			"style": {
+			}
 		},
 		{
 			"path": "pages/component/card",
-			"style": {}
+			"style": {
+			}
 		},
 		{
 			"path": "pages/component/form",
-			"style": {}
+			"style": {
+			}
 		},
 		{
 			"path": "pages/component/timeline",
-			"style": {}
+			"style": {
+			}
 		},
 		{
 			"path": "pages/component/chat",
-			"style": {}
+			"style": {
+			}
 		},
 		{
 			"path": "pages/component/swiper",
-			"style": {}
+			"style": {
+			}
 		},
 		{
 			"path": "pages/component/modal",
-			"style": {}
+			"style": {
+			}
 		},
 		{
 			"path": "pages/component/steps",
-			"style": {}
+			"style": {
+			}
 		}, {
 			"path": "pages/plugin/home",
-			"style": {}
+			"style": {
+			}
 		},{
 			"path": "pages/plugin/indexes",
-			"style": {}
+			"style": {
+			}
 		}, {
 			"path": "pages/plugin/animation",
-			"style": {}
+			"style": {
+			}
 		}, {
 			"path": "pages/plugin/drawer",
-			"style": {}
+			"style": {
+			}
 		}, {
 			"path": "pages/plugin/verticalnav",
-			"style": {}
+			"style": {
+			}
 		}, {
             "path" : "pages/personSection/home",
-            "style" : {}
+            "style": {
+            }
         }, {
             "path" : "pages/community/home",
-            "style" : {}
+           "style": {
+           }
         }, {
             "path" : "pages/common/nav",
-            "style" : {}
+            "style": {
+            }
         },{
             "path" : "pages/data/home",
-            "style" : {}
+           "style": {
+           }
         },{
             "path" : "pages/find/home",
-            "style" : {}
+            "style": {
+            }
+        },{
+            "path" : "pages/articleDetail/articleDetail",
+            "style": {
+            }
+        }
+        ,{
+            "path" : "pages/articleAdd/articleAdd",
+           "style": {
+           }
         }
     ],
 	"globalStyle": {
