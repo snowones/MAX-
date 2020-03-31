@@ -16,7 +16,7 @@
 					{{item.theme}}
 				</view>	
 			</view>
-			<view class="cu-card case" :class="isCard?'no-card':''">
+			<view class="cu-card case" :class="isCard?'no-card':''"  @click="articleDetail">
 				<view class="cu-item shadow">
 					<view class="image">
 						<image :src="item.bg"  mode="widthFix"></image>
@@ -194,9 +194,17 @@
 			* 点击事件 添加文章
 			*/
 			addArticle(){
-				console.log('我要添加文章');
 				uni.navigateTo({
 					url:'../articleAdd/articleAdd'
+				})
+			},
+			/*
+			*zyx/2020/3.31
+			* 点击事件 进入文章详情
+			*/
+			articleDetail(){
+				uni.navigateTo({
+					url:'../articleDetail/articleDetail'
 				})
 			}
 		}
