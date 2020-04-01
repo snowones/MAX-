@@ -185,6 +185,34 @@
 				]
 			};
 		},
+		mounted(){
+			uni.request({
+			    url: 'http://182.92.64.245/tp5/public/index.php/index/index/selectAllArticle', //仅为示例，并非真实接口地址。
+			    data: {
+			    },
+			    success: (res) => {
+			        console.log(res.data);
+					let data = res.data;
+					let tempArr = []; //临时数组 存放articleDatas
+					for(let i in data){
+						let tempObj = {}; //临时对象存放每一个文章的具体数据
+						tempObj.id = data[i].id;
+						tempObj.title = data[i].title;
+						tempObj.theme = data[i].theme;
+						tempObj.bg = data[i].bg;
+						tempObj.subTitle = data[i].sub_title;
+						tempObj.userName = data[i].user_name;
+						tempObj.userAvatar = data[i].user_avatar;
+						tempObj.createTime = data[i].create_time;
+						tempObj.vivewNumber = data[i].vivew_number;
+						tempObj.supportNumber = data[i].support_number;
+						tempObj.commentNumber = data[i].comment_number;
+						tempArr.push(tempObj);
+					}
+					this.articleDatas = tempArr;
+			    }
+			});
+		},
 		methods: {
 			IsCard(e) {
 				this.isCard = e.detail.value
