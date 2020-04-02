@@ -2,20 +2,21 @@
 	<view class="content">
 		<cu-custom bgColor="bg-black" :isBack="true">
 			<block slot="backText">返回</block>
-			<block slot="content">发布文章</block>
+			<!-- <block slot="content">发布文章</block> -->
 		</cu-custom>
+		<button  @click="formSubmit">发布文章</button>
 		<form>
 			<view class="cu-form-group margin-top">
 				<view class="title">标题</view>
-				<input placeholder="文章标题" name="input"></input>
+				<input placeholder="文章标题" name="input"  @blur="(e) => {this.pushInfo(e,'title')}" :value="title" ></input>
 			</view>
 			<view class="cu-form-group">
 				<view class="title">主题</view>
-				<input placeholder="文章主题" name="input"></input>
+				<input placeholder="文章主题" name="input"  @blur="(e) => {this.pushInfo(e,'theme')}" :value="theme" ></input>
 			</view>
 			<view class="cu-form-group">
 				<view class="title">副标题</view>
-				<input placeholder="副标题" name="input"></input>
+				<input placeholder="副标题" name="input"  @blur="(e) => {this.pushInfo(e,'sub_title')}" :value="sub_title" ></input>
 			</view>
 			
 			<view class="cu-bar bg-white margin-top">
@@ -63,6 +64,9 @@
                 showEditor:false,//编辑文章正文得弹窗
                 html: '<b style="color:#ff0000">文章正文...</b>',//文章正文的内容
 				imgList: [],
+				title:'',//文章标题
+				theme:'',//文章主题
+				sub_title:'',//文章副标题
             }
         },
         methods: {
@@ -119,6 +123,70 @@
 					}
 				})
 			},
+			/*
+			*zyx/2020/4/2
+			*表单各处输入验证  //这里可优化  现在三处填写都没有加验证
+			*/
+			pushInfo(e, type){
+				let _type = type;
+				switch (_type){
+					case "title":
+						if(e.detail.value){
+							this.title = e.detail.value;
+						}else{
+							uni.showToast({
+								title: '请输入标题',
+								icon: 'none',
+								duration: 2000
+							})
+						}
+						break;
+					case "theme":
+						if(e.detail.value){
+							this.theme = e.detail.value;
+						}else{
+							uni.showToast({
+								title: '请输入主题',
+								icon: 'none',
+								duration: 2000
+							})
+						}
+						break;
+					case "sub_title":
+						if(e.detail.value){
+							this.sub_title = e.detail.value;
+						}else{
+							uni.showToast({
+								title: '请输入副标题',
+								icon: 'none',
+								duration: 2000
+							})
+						}
+						break;
+					default:
+						break;
+				}
+			},
+			/*
+			*zyx 2020/4/2
+			* 提交表单
+			*/
+			formSubmit(){
+				let {html,title,theme,sub_title} = this;
+				if(!html ||!title ||!theme ||!sub_title){
+					uni.showToast({
+						title: '请将信息填写完整',
+						icon: 'none',
+						duration: 2000
+					})
+				}
+				console.log(html);
+				console.log(title);
+				console.log(theme);
+				console.log(sub_title);
+				
+				
+			}
         }
     }
 </script>
