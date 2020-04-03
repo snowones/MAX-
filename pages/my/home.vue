@@ -1,4 +1,4 @@
-<template name="community">
+<template name="my">
 	<view>
 		<view class="bg-black bg-shadeTop myHead">
 			<view class="cu-list menu-avatar" v-if="isLogin">

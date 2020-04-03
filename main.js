@@ -10,17 +10,20 @@ Vue.component('components',components)
 import plugin from './pages/plugin/home.vue'
 Vue.component('plugin',plugin)
 
-import person from './pages/personSection/home.vue'
-Vue.component('person',person)
+//论坛组件
+import discuss from './pages/discuss/home.vue'
+Vue.component('discuss',discuss)
 
-import community from './pages/community/home.vue'
-Vue.component('community',community)
+//不能起名为article 命名冲突  文章组件
+import article from './pages/article/home.vue'
+Vue.component('articleSub',article)
+//个人中心组件
+import my from './pages/my/home.vue'
+Vue.component('my',my)
+//商城组件
+import shop from './pages/shop/home.vue'
+Vue.component('shop',shop)
 
-import data from './pages/data/home.vue'
-Vue.component('data',data)
-
-import find from './pages/find/home.vue'
-Vue.component('find',find)
 
 import navigation from './pages/common/nav.vue'
 Vue.component('navigation',navigation)

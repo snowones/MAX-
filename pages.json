@@ -141,11 +141,11 @@
 			"style": {
 			}
 		}, {
-            "path" : "pages/personSection/home",
+            "path" : "pages/discuss/home",
             "style": {
             }
         }, {
-            "path" : "pages/community/home",
+            "path" : "pages/my/home",
            "style": {
            }
         }, {
@@ -153,11 +153,11 @@
             "style": {
             }
         },{
-            "path" : "pages/data/home",
+            "path" : "pages/shop/home",
            "style": {
            }
         },{
-            "path" : "pages/find/home",
+            "path" : "pages/article/home",
             "style": {
             }
         },{
@@ -169,6 +169,10 @@
             "path" : "pages/articleAdd/articleAdd",
            "style": {
            }
+        }
+        ,{
+            "path" : "pages/discussDetail/discussDetail",
+            "style" : {}
         }
     ],
 	"globalStyle": {
@@ -200,7 +204,7 @@
 						"path": "pages/plugin/home"
 					},{
 						"name": "文章", //模式名称
-						"path": "pages/find/home"
+						"path": "pages/article/home"
 					}
 		]
 	}

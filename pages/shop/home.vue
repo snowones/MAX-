@@ -1,4 +1,4 @@
-<template name="data">
+<template name="shop">
 	<view>
 		<swiper class="screen-swiper round-dot" :indicator-dots="true" :circular="true" :autoplay="true" interval="5000"
 		 duration="500">
