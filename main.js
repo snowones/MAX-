@@ -1,14 +1,6 @@
 import Vue from 'vue'
 import App from './App'
 
-import basics from './pages/basics/home.vue'
-Vue.component('basics',basics)
-
-import components from './pages/component/home.vue'
-Vue.component('components',components)
-
-import plugin from './pages/plugin/home.vue'
-Vue.component('plugin',plugin)
 
 //论坛组件
 import discuss from './pages/discuss/home.vue'
@@ -23,6 +15,9 @@ Vue.component('my',my)
 //商城组件
 import shop from './pages/shop/home.vue'
 Vue.component('shop',shop)
+//图库组件
+import picture from './pages/picture/home.vue'
+Vue.component('picture',picture)
 
 
 import navigation from './pages/common/nav.vue'

@@ -4,7 +4,7 @@
 		<discuss v-if="PageCur=='discuss'"></discuss>
 		<articleSub v-if="PageCur=='article'"></articleSub>
 		<shop v-if="PageCur=='shop'"></shop>
-		<components v-if="PageCur=='component'"></components>
+		<picture v-if="PageCur=='picture'"></picture>
 		<my  v-if="PageCur=='my'"></my>
 		<view class="cu-bar tabbar bg-white shadow foot">
 			<view class="action" @click="NavChange" data-cur="discuss">
@@ -25,11 +25,11 @@
 				</view>
 				<view :class="PageCur=='shop'?'text-green':'text-gray'">商城</view>
 			</view>
-			<view class="action" @click="NavChange" data-cur="component">
+			<view class="action" @click="NavChange" data-cur="picture">
 				<view class='cuIcon-cu-image'>
 					<image :src="'/static/tabbar/match' + '.png'"></image>
 				</view>
-				<view :class="PageCur=='component'?'text-green':'text-gray'">学习</view>
+				<view :class="PageCur=='picture'?'text-green':'text-gray'">图库</view>
 			</view>
 			<view class="action" @click="NavChange" data-cur="my">
 				<view class='cuIcon-cu-image'>

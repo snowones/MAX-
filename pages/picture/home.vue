@@ -1,15 +1,9 @@
-<template>
+<template name="picture">
 	<view>
-		<view class="fixed">
-			<cu-custom :isBack="true" bgColor="bg-shadeTop text-white">
-				<block slot="backText">返回</block>
-				<block slot="content">垂直导航</block>
-			</cu-custom>
-		</view>
 		<swiper class="screen-swiper round-dot" :indicator-dots="true" :circular="true" :autoplay="true" interval="5000"
 		 duration="500">
 			<swiper-item v-for="(item,index) in 4" :key="index">
-				<image :src="'https://ossweb-img.qq.com/images/lol/web201310/skin/big3900'+index+ '.jpg'" mode="aspectFill"></image>
+				<image :src="'https://zyx-max.oss-cn-beijing.aliyuncs.com/dota'+index+ '.jpg'" mode="aspectFill"></image>
 			</swiper-item>
 		</swiper>
 		<view class="VerticalBox">
@@ -28,13 +22,13 @@
 					</view>
 					<view class="cu-list menu-avatar">
 						<view class="cu-item">
-							<view class="cu-avatar round lg" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10001.jpg);"></view>
+							<view class="cu-avatar round lg" style="background-image:url(https://zyx-max.oss-cn-beijing.aliyuncs.com/59400E2DEC2F70F932CF012E68F6A2E5.jpg);"></view>
 							<view class="content">
-								<view class="text-grey">凯尔</view>
+								<view class="text-grey">大牙</view>
 								<view class="text-gray text-sm flex">
 									<text class="text-cut">
 										<text class="cuIcon-infofill text-red  margin-right-xs"></text>
-										我已天理为凭，踏入这片荒芜，不再受凡人的枷锁遏制。我已天理为凭，踏入这片荒芜，不再受凡人的枷锁遏制。
+										岂有此理
 									</text> </view>
 							</view>
 							<view class="action">
@@ -43,17 +37,17 @@
 							</view>
 						</view>
 						<view class="cu-item">
-							<view class="cu-avatar round lg" style="background-image:url(https://ossweb-img.qq.com/images/lol/img/champion/Taric.png);">
+							<view class="cu-avatar round lg" style="background-image:url(https://zyx-max.oss-cn-beijing.aliyuncs.com/C5CC875F9F9DC7F3F1EBEE879E7E8397.jpg);">
 								<view class="cu-tag badge">99+</view>
 							</view>
 							<view class="content">
 								<view class="text-grey">
-									<text class="text-cut">瓦洛兰之盾-塔里克</text>
-									<view class="cu-tag round bg-orange sm">战士</view>
+									<text class="text-cut">pp</text>
+									<view class="cu-tag round bg-orange sm">five</view>
 								</view>
 								<view class="text-gray text-sm flex">
 									<text class="text-cut">
-										塔里克是保护者星灵，用超乎寻常的力量守护着符文之地的生命、仁爱以及万物之美。塔里克由于渎职而被放逐，离开了祖国德玛西亚，前去攀登巨神峰寻找救赎，但他找到的却是来自星界的更高层的召唤。现在的塔里克与古代巨神族的神力相融合，以瓦洛兰之盾的身份，永不疲倦地警惕着阴险狡诈的虚空腐化之力。
+										我是five
 									</text>
 								</view>
 							</view>
@@ -63,10 +57,10 @@
 							</view>
 						</view>
 						<view class="cu-item ">
-							<view class="cu-avatar radius lg" style="background-image:url(https://ossweb-img.qq.com/images/lol/img/champion/Morgana.png);"></view>
+							<view class="cu-avatar radius lg" style="background-image:url(https://zyx-max.oss-cn-beijing.aliyuncs.com/0602C7D04B0AC9304399151FBC05B528.jpg);"></view>
 							<view class="content">
-								<view class="text-pink"><text class="text-cut">莫甘娜</text></view>
-								<view class="text-gray text-sm flex"> <text class="text-cut">凯尔，你被自己的光芒变的盲目！</text></view>
+								<view class="text-pink"><text class="text-cut">洋神</text></view>
+								<view class="text-gray text-sm flex"> <text class="text-cut">洋神牛逼</text></view>
 							</view>
 							<view class="action">
 								<view class="text-grey text-xs">22:20</view>
@@ -74,12 +68,12 @@
 							</view>
 						</view>
 						<view class="cu-item grayscale">
-							<view class="cu-avatar radius lg" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big81007.jpg);"></view>
+							<view class="cu-avatar radius lg" style="background-image:url(https://zyx-max.oss-cn-beijing.aliyuncs.com/E23244AECAB5FBC852EB6A9723FCD7B8.jpg);"></view>
 							<view class="content">
-								<view><text class="text-cut">伊泽瑞尔</text>
+								<view><text class="text-cut">阿欣</text>
 									<view class="cu-tag round bg-orange sm">断开连接...</view>
 								</view>
-								<view class="text-gray text-sm flex"> <text class="text-cut"> 等我回来一个打十个</text></view>
+								<view class="text-gray text-sm flex"> <text class="text-cut"> 我也是five</text></view>
 							</view>
 							<view class="action">
 								<view class="text-grey text-xs">22:20</view>
@@ -87,16 +81,16 @@
 							</view>
 						</view>
 						<view class="cu-item cur">
-							<view class="cu-avatar radius lg" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big81020.jpg);">
+							<view class="cu-avatar radius lg" style="background-image:url(https://zyx-max.oss-cn-beijing.aliyuncs.com/65BA55ECF2CF0F6FD472C66B6DC8B998.jpg);">
 								<view class="cu-tag badge"></view>
 							</view>
 							<view class="content">
 								<view>
-									<text class="text-cut">瓦罗兰大陆-睡衣守护者-新手保护营</text>
-									<view class="cu-tag round bg-orange sm">6人</view>
+									<text class="text-cut">大章鱼</text>
+									<view class="cu-tag round bg-orange sm">five三号</view>
 								</view>
 								<view class="text-gray text-sm flex">
-									<text class="text-cut"> 伊泽瑞尔：<text class="cuIcon-locationfill text-orange margin-right-xs"></text> 传送中...</text></view>
+									<text class="text-cut"><text class="cuIcon-locationfill text-orange margin-right-xs"></text> 救！！！</text></view>
 							</view>
 							<view class="action">
 								<view class="text-grey text-xs">22:20</view>
@@ -134,8 +128,6 @@
 			}
 			this.list = list;
 			this.listCur = list[0];
-		},
-		onReady() {
 			uni.hideLoading()
 		},
 		methods: {
@@ -224,3 +216,4 @@
 		flex: 1;
 	}
 </style>
+
