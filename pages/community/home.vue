@@ -6,12 +6,13 @@
 					<view class="cu-avatar round lg" :style="'background-image:url('+ avatarUrl+');'"></view>
 					<view class="content">
 						<view class="text-white">{{nickName}}</view>
-						<view class="text-white text-sm flex">
+						<!-- 这里可以再放写别的信息 -->
+						<!-- <view class="text-white text-sm flex">  
 							<view class="text-cut">
-								{{openId}}
+								用户ID:{{openId}}
 								<text class="icon-copy text-white margin-left-xs"></text>
 							</view>
-						</view>
+						</view> -->
 					</view>
 					<view class="action">
 						<text class="icon-right text-xl"></text>
@@ -113,42 +114,30 @@
 				openId:'',//用户openid
 			}
 		},
+		/*使用vue生命周期  组件渲染时拿到数据*/
+		mounted(){
+			//判断是否已经登录过
+			let nickName = uni.getStorageSync('nickName');
+			let avatarUrl = uni.getStorageSync('avatarUrl');
+			if(nickName){
+				this.isLogin = true;
+				this.nickName = nickName;
+				this.avatarUrl = avatarUrl;
+			}
+		},
 		methods: {
 			toOrder(nav) {
 				uni.navigateTo({
 					url: '/pages/order/list?nav=' + nav,
 				});
 			},
-			showModal(e) {
-				this.modalName = e.currentTarget.dataset.target
-			},
-			hideModal(e) {
-				this.modalName = null
-			},
-			/*
-			*zyx
-			*2020/4/2
-			*调用微信登录 
-			*/
-			getuserinfo(e){
-				var _self = this;
-				if (e.detail.errMsg == 'getUserInfo:ok') {
-					uni.showLoading({
-						title: '加载中',
-						mask: true
-					});
-					// 说明用户点击了同意
-					let userInfo = e.detail.userInfo; // userInfo下面有 avatarUrl city country gender  language nickName province
-					try {
-						uni.setStorageSync('nickName', userInfo.nickName);
-						uni.setStorageSync('avatarUrl', userInfo.avatarUrl);
-						this.nickName = userInfo.nickName;
-						this.avatarUrl = userInfo.avatarUrl;
-						console.log(this.nickName);
-						console.log(this.avatarUrl);
-					} catch (e) {
-						console.log(e);
-					}
+			/**
+			 * zyx
+			 * 2020.4.3
+			 * 用promise封装微信登录接口拿到用户openid
+			 */
+			getOpenId() {
+				return new Promise((resolve) => {
 					uni.login({
 						provider: 'weixin',
 						success: function(response) {
@@ -160,13 +149,71 @@
 								},
 								success: res => {
 									console.log(res);
-									_self.openId = res.data.openid;
-									_self.isLogin = true;
-									uni.hideLoading();
+									resolve(res.data.openid);
 								},
 							});
 						}
 					});
+				})
+			},
+			/**
+			 * zyx
+			 * 2020.4.3
+			 * 用promise封装储存用户信息接口  后台判断改用户是否已注册 已注册直接登录 没注册将用户数据存入数据库
+			 */
+			saveUserInfo(openId,nickName,avatarUrl) {
+				return new Promise((resolve) => {
+					uni.request({
+						url:'http://182.92.64.245/tp5/public/index.php/index/index/saveUserInfo',
+						method: 'GET',
+						data: {
+							openid: openId,//用户openid
+							name: nickName,//用户微信名
+							avatar_url: avatarUrl,//用户微信头像链接
+						},
+						success: res => {
+							console.log(res);
+							resolve(res);
+						},
+					});
+				})
+			},
+			/*
+			*zyx
+			*2020/4/2
+			*调用微信登录 
+			* 定义为async 完成全部登录的操作 第一步登录微信 拿到openid 然后把用户信息存入数据库
+			*/
+			async getuserinfo(e){
+				var _self = this;
+				if (e.detail.errMsg == 'getUserInfo:ok') {
+					uni.showLoading({
+						title: '加载中',
+						mask: true
+					});
+					// 说明用户点击了同意
+					// userInfo下面有 avatarUrl city country gender  language nickName province
+					let userInfo = e.detail.userInfo; 
+					console.log(userInfo);
+					try {
+						uni.setStorageSync('nickName', userInfo.nickName);
+						uni.setStorageSync('avatarUrl', userInfo.avatarUrl);
+						_self.nickName = userInfo.nickName;
+						_self.avatarUrl = userInfo.avatarUrl;
+						console.log(_self.nickName);
+						console.log(_self.avatarUrl);
+					} catch (e) {
+						console.log(e);
+					}
+					//等待调用微信登录接口拿到openid
+					let openId = await _self.getOpenId();
+					uni.setStorageSync('openId', openId);
+					console.log(openId)
+					//然后把用户信息全部存入数据库
+					let savaRes = await this.saveUserInfo(openId,userInfo.nickName,userInfo.avatarUrl);
+					_self.openId = openId;
+					_self.isLogin = true;
+					uni.hideLoading();
 				}else{
 					uni.showToast({
 						title: '登录以后才能获取个人信息',
