@@ -58,6 +58,7 @@
 			return {
 				discussDatas:[
 					{
+						id:1,//帖子id
 						title:'讨论下ti9',//帖子标题
 						content:'lgd真是菜阿，不服来辩',//帖子内容 
 						contentImg:['https://zyx-max.oss-cn-beijing.aliyuncs.com/TI1.jpg','https://zyx-max.oss-cn-beijing.aliyuncs.com/TI2.jpg','https://zyx-max.oss-cn-beijing.aliyuncs.com/TI3.jpg'],//帖子图片
@@ -69,6 +70,7 @@
 						commentNumber:10,//文章评论数
 					},
 					{
+						id:2,//帖子id
 						title:'在家呆傻了，什么时候开学阿',//帖子标题
 						content:'有没有河南高校得兄弟自己学校通知开学时间了得，参考一下',//帖子内容 
 						contentImg:['https://zyx-max.oss-cn-beijing.aliyuncs.com/TI4.jpg','https://zyx-max.oss-cn-beijing.aliyuncs.com/TI5.jpg','https://zyx-max.oss-cn-beijing.aliyuncs.com/TI6.jpg','https://zyx-max.oss-cn-beijing.aliyuncs.com/TI7.jpg','https://zyx-max.oss-cn-beijing.aliyuncs.com/TI8.jpg','https://zyx-max.oss-cn-beijing.aliyuncs.com/TI0.jpg'],//帖子图片
