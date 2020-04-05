@@ -43,6 +43,10 @@
             "path" : "pages/picture/home",
             "style" : {}
         }
+		,{
+		    "path": "pages/type/many",
+		   "style" : {}
+		}
     ],
 	"globalStyle": {
 		"mp-alipay": {

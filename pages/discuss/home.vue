@@ -15,7 +15,7 @@
 			</view>
 		</view>
 		
-		<view class="cu-card dynamic no-card" v-for="(item,index) in discussDatas" :key="index" @click="discussDetail">
+		<view class="cu-card dynamic no-card" v-for="(item,index) in discussDatas" :key="index" @click="discussDetail(item)">
 			<view class="cu-item shadow">
 				<view class="cu-list menu-avatar">
 					<view class="cu-item">
@@ -100,10 +100,11 @@
 			/*
 			*zyx/2020/3.31
 			* 点击事件 进入帖子详情
+			* 同时把帖子得数据传入
 			*/
-			discussDetail(){
+			discussDetail(item){
 				uni.navigateTo({
-					url:'../discussDetail/discussDetail'
+					url:'../discussDetail/discussDetail?data=' + JSON.stringify(item)
 				})
 			}
 		}

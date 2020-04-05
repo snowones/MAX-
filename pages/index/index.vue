@@ -23,13 +23,13 @@
 				<view class='cuIcon-cu-image'>
 					<image :src="'/static/tabbar/shop' + [PageCur=='shop'?'_hover':''] + '.png'"></image>
 				</view>
-				<view :class="PageCur=='shop'?'text-green':'text-gray'">商城</view>
+				<view :class="PageCur=='shop'?'text-green':'text-gray'">闲置</view>
 			</view>
 			<view class="action" @click="NavChange" data-cur="picture">
 				<view class='cuIcon-cu-image'>
 					<image :src="'/static/tabbar/match' + '.png'"></image>
 				</view>
-				<view :class="PageCur=='picture'?'text-green':'text-gray'">图库</view>
+				<view :class="PageCur=='picture'?'text-green':'text-gray'">相册</view>
 			</view>
 			<view class="action" @click="NavChange" data-cur="my">
 				<view class='cuIcon-cu-image'>
@@ -45,7 +45,7 @@
 	export default {
 		data() {
 		return {
-				PageCur: 'article'
+				PageCur: 'discuss'
 			}
 		},
 		methods: {

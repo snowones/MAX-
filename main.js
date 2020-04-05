@@ -19,6 +19,10 @@ Vue.component('shop',shop)
 import picture from './pages/picture/home.vue'
 Vue.component('picture',picture)
 
+//引入图库卡片组件
+import componentUpperCamelCase from './components/hm-cover-card/index.vue';
+Vue.component('hm-cover-card',componentUpperCamelCase)
+
 
 import navigation from './pages/common/nav.vue'
 Vue.component('navigation',navigation)
