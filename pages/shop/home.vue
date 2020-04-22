@@ -1,106 +1,68 @@
 <template name="shop">
 	<view>
-		<swiper class="screen-swiper round-dot" :indicator-dots="true" :circular="true" :autoplay="true" interval="5000"
+		<!-- <swiper class="screen-swiper round-dot" :indicator-dots="true" :circular="true" :autoplay="true" interval="5000"
 		 duration="500">
 			<swiper-item v-for="(item,index) in 4" :key="index">
 				<image :src="'https://zyx-max.oss-cn-beijing.aliyuncs.com/dota'+index+ '.jpg'" mode="aspectFill"></image>
 			</swiper-item>
-		</swiper>
-		<view class="VerticalBox">
-			<scroll-view class="VerticalNav nav" scroll-y scroll-with-animation :scroll-top="verticalNavTop" style="height:calc(100vh - 375upx)">
-				<view class="cu-item" :class="index==tabCur?'text-green cur':''" v-for="(item,index) in list" :key="index" @tap="TabSelect"
-				 :data-id="index">
-					Tab-{{item.name}}
+		</swiper> -->
+		<block>
+			<scroll-view scroll-x class="topicBox">
+				<view v-for="(item,index) in topicList" :key="index" :class="'bg-' + item.color" class="cu-item shadow">
+					<view class="text-bold text-line2cut">
+						#{{item.title}}#
+					</view>
+					<view class="text-xs">
+						<num :num="item.num"></num> 人在参与
+					</view>
+					<image :src="item.imgUrl" mode="aspectFill"></image>
+				</view>
+				<view class="cu-item shadow bg-red">
+					<view class="text-sm">更多话题</view>
+					<view class="text-center icon-roundrightfill text-xl margin-top-xs"></view>
+					<image src="https://image.weilanwl.com/qhShop/topicbg.png" mode="aspectFill"></image>
 				</view>
 			</scroll-view>
-			<scroll-view class="VerticalMain" scroll-y scroll-with-animation style="height:calc(100vh - 375upx)"
-			 :scroll-into-view="'main-'+mainCur" @scroll="VerticalMain">
-				<view class="padding-top padding-lr" v-for="(item,index) in list" :key="index" :id="'main-'+index">
-					<view class="cu-bar solid-bottom bg-white">
-						<view class="action">
-							<text class="cuIcon-title text-green"></text> Tab-{{item.name}}</view>
+			<view class="findCard">
+				<view class="cu-card goods col-goods" v-for="(card,id) in list" :key="id">
+					<view class="cu-item shadow topic-item" style="background-color: #F37B1D; color: #FFFFFF;">
+						<view class="text-center padding-tb-lg">
+							<view>#618必囤好物清单#</view>
+							<view class="text-xs margin-top-xs">发布推荐 得奖品</view>
+						</view>
+						<view class="flex justify-between align-center padding-bottom-sm padding-right-sm">
+							<view class="cu-avatar-group">
+								<view class="cu-avatar round sm" v-for="(item,index) in 4" :key="index" :style="[{ backgroundImage:'url(' + 'https://hbimg.huabanimg.com/68b31a50db076d4334f9cc608b8a8cfdcd389bcd1755-ix61xr_sq75sf' + ')' }]"></view>
+							</view>
+							<view class="text-xs">
+								<text>50</text> 人参加
+							</view>
+						</view>
+						<image src="https://image.weilanwl.com/qhShop/topicbg.png" mode="aspectFill"></image>
 					</view>
-					<view class="cu-list menu-avatar">
-						<view class="cu-item">
-							<view class="cu-avatar round lg" style="background-image:url(https://zyx-max.oss-cn-beijing.aliyuncs.com/59400E2DEC2F70F932CF012E68F6A2E5.jpg);"></view>
-							<view class="content">
-								<view class="text-grey">大牙</view>
-								<view class="text-gray text-sm flex">
-									<text class="text-cut">
-										<text class="cuIcon-infofill text-red  margin-right-xs"></text>
-										岂有此理
-									</text> </view>
+					<view class="cu-item shadow bg-white" v-for="(item,index) in card" :key="index" @tap="toDetail(index)">
+						<image :src="item.imgUrl" mode="widthFix"></image>
+						<view class="content">
+							<view class="title">
+								<view class="text-line2cut">{{item.title}}</view>
 							</view>
-							<view class="action">
-								<view class="text-grey text-xs">22:20</view>
-								<view class="cu-tag round bg-grey sm">5</view>
-							</view>
-						</view>
-						<view class="cu-item">
-							<view class="cu-avatar round lg" style="background-image:url(https://zyx-max.oss-cn-beijing.aliyuncs.com/C5CC875F9F9DC7F3F1EBEE879E7E8397.jpg);">
-								<view class="cu-tag badge">99+</view>
-							</view>
-							<view class="content">
-								<view class="text-grey">
-									<text class="text-cut">pp</text>
-									<view class="cu-tag round bg-orange sm">five</view>
+							<view class="flex justify-between align-center margin-top-xs">
+								<view class="flex align-center">
+									<view class="cu-avatar sm round" :style="[{backgroundImage:'url(' + item.avatar + ')'}]"></view>
+									<view class="text-cut text-sm flex-sub">{{item.name}}</view>
 								</view>
-								<view class="text-gray text-sm flex">
-									<text class="text-cut">
-										我是five
-									</text>
+								<view class="padding-left-xs text-right flex align-centers">
+									<text class="cuIcon-appreciatefill margin-lr-xs"></text>
+									<view class="text-gray text-sm margin-left-xs">{{item.favor}}</view>
 								</view>
-							</view>
-							<view class="action">
-								<view class="text-grey text-xs">22:20</view>
-								<view class="cuIcon-notice_forbid_fill text-gray"></view>
-							</view>
-						</view>
-						<view class="cu-item ">
-							<view class="cu-avatar radius lg" style="background-image:url(https://zyx-max.oss-cn-beijing.aliyuncs.com/0602C7D04B0AC9304399151FBC05B528.jpg);"></view>
-							<view class="content">
-								<view class="text-pink"><text class="text-cut">洋神</text></view>
-								<view class="text-gray text-sm flex"> <text class="text-cut">洋神牛逼</text></view>
-							</view>
-							<view class="action">
-								<view class="text-grey text-xs">22:20</view>
-								<view class="cu-tag round bg-red sm">5</view>
-							</view>
-						</view>
-						<view class="cu-item grayscale">
-							<view class="cu-avatar radius lg" style="background-image:url(https://zyx-max.oss-cn-beijing.aliyuncs.com/E23244AECAB5FBC852EB6A9723FCD7B8.jpg);"></view>
-							<view class="content">
-								<view><text class="text-cut">阿欣</text>
-									<view class="cu-tag round bg-orange sm">断开连接...</view>
-								</view>
-								<view class="text-gray text-sm flex"> <text class="text-cut"> 我也是five</text></view>
-							</view>
-							<view class="action">
-								<view class="text-grey text-xs">22:20</view>
-								<view class="cu-tag round bg-red sm">5</view>
-							</view>
-						</view>
-						<view class="cu-item cur">
-							<view class="cu-avatar radius lg" style="background-image:url(https://zyx-max.oss-cn-beijing.aliyuncs.com/65BA55ECF2CF0F6FD472C66B6DC8B998.jpg);">
-								<view class="cu-tag badge"></view>
-							</view>
-							<view class="content">
-								<view>
-									<text class="text-cut">大章鱼</text>
-									<view class="cu-tag round bg-orange sm">five三号</view>
-								</view>
-								<view class="text-gray text-sm flex">
-									<text class="text-cut"><text class="cuIcon-locationfill text-orange margin-right-xs"></text> 救！！！</text></view>
-							</view>
-							<view class="action">
-								<view class="text-grey text-xs">22:20</view>
-								<view class="cuIcon-notice_forbid_fill text-gray"></view>
 							</view>
 						</view>
 					</view>
 				</view>
-			</scroll-view>
-		</view>
+			</view>
+			<view class="cu-load margin-bottom" :class="!isLoad?'loading':'over'"></view>
+		</block>
+		
 	</view>
 </template>
 
@@ -108,112 +70,260 @@
 	export default {
 		data() {
 			return {
-				list: [],
-				tabCur: 0,
-				mainCur: 0,
-				verticalNavTop: 0,
-				load: true
-			};
-		},
-		onLoad() {
-			uni.showLoading({
-				title: '加载中...',
-				mask: true
-			});
-			let list = [{}];
-			for (let i = 0; i < 26; i++) {
-				list[i] = {};
-				list[i].name = String.fromCharCode(65 + i);
-				list[i].id = i;
+				isLoad: true,
+				topicList: [{
+					title: '好物撩一撩',
+					num: 12312,
+					imgUrl: 'https://hbimg.huabanimg.com/c2b3a8aff0df4a7e4c65ad06404278c20020802adf63d-fre8vM_fw658',
+					color: 'blue'
+				}, {
+					title: '618必囤好物清单',
+					num: 3421,
+					imgUrl: 'https://hbimg.huabanimg.com/c2b3a8aff0df4a7e4c65ad06404278c20020802adf63d-fre8vM_fw658',
+					color: 'red'
+				}, {
+					title: '好物撩一撩',
+					num: 12312,
+					imgUrl: 'https://hbimg.huabanimg.com/c2b3a8aff0df4a7e4c65ad06404278c20020802adf63d-fre8vM_fw658',
+					color: 'pink'
+				}, {
+					title: '618必囤好物清单',
+					num: 3421,
+					imgUrl: 'https://hbimg.huabanimg.com/c2b3a8aff0df4a7e4c65ad06404278c20020802adf63d-fre8vM_fw658',
+					color: 'green'
+				}, ],
+				list: [
+					[{
+						title: '英国的"外科医生"，竟然把nike运动服改造成了高级定制西装',
+						imgUrl: 'https://hbimg.huabanimg.com/c2b3a8aff0df4a7e4c65ad06404278c20020802adf63d-fre8vM_fw658',
+						avatar: 'https://hbimg.huabanimg.com/68b31a50db076d4334f9cc608b8a8cfdcd389bcd1755-ix61xr_sq75sf',
+						name: '盒子芥末',
+						isFavor: false,
+						favor: 333
+					}, {
+						title: '英国的"外科医生"，竟然把nike运动服改造成了高级定制西装',
+						imgUrl: 'https://hbimg.huabanimg.com/a93f35df96eb6fd176313decd3c27ade7b71c7c378630-l6CXXd_fw658',
+						avatar: 'https://hbimg.huabanimg.com/68b31a50db076d4334f9cc608b8a8cfdcd389bcd1755-ix61xr_sq75sf',
+						name: '盒子芥末',
+						isFavor: true,
+						favor: 333
+					}, {
+						title: '英国的"外科医生"，竟然把nike运动服改造成了高级定制西装',
+						imgUrl: 'https://hbimg.huabanimg.com/d500eab4467f91bcde88782f19a8336c2b81ce75bdb1a-kedNbr_fw658',
+						avatar: 'https://hbimg.huabanimg.com/68b31a50db076d4334f9cc608b8a8cfdcd389bcd1755-ix61xr_sq75sf',
+						name: '盒子芥末',
+						isFavor: true,
+						favor: 333
+					}, {
+						title: '英国的"外科医生"，竟然把nike运动服改造成了高级定制西装',
+						imgUrl: 'https://hbimg.huabanimg.com/d500eab4467f91bcde88782f19a8336c2b81ce75bdb1a-kedNbr_fw658',
+						avatar: 'https://hbimg.huabanimg.com/68b31a50db076d4334f9cc608b8a8cfdcd389bcd1755-ix61xr_sq75sf',
+						name: '盒子芥末',
+						isFavor: true,
+						favor: 333
+					}],
+					[{
+						title: '潮男Eugene Tong教你在冬天如何戴好一头好帽',
+						imgUrl: 'https://hbimg.huabanimg.com/1e2595586608f1729cefa00a5e4c72fcbf903ed7c8e6-7IxJF0_fw658',
+						avatar: 'https://hbimg.huabanimg.com/68b31a50db076d4334f9cc608b8a8cfdcd389bcd1755-ix61xr_sq75sf',
+						name: '盒子芥末',
+						isFavor: false,
+						favor: 333
+					}, {
+						title: '潮男Eugene Tong教你在冬天如何戴好一头好帽',
+						imgUrl: 'https://hbimg.huabanimg.com/a93f35df96eb6fd176313decd3c27ade7b71c7c378630-l6CXXd_fw658',
+						avatar: 'https://hbimg.huabanimg.com/68b31a50db076d4334f9cc608b8a8cfdcd389bcd1755-ix61xr_sq75sf',
+						name: '盒子芥末',
+						isFavor: true,
+						favor: 333
+					}, {
+						title: '潮男Eugene Tong教你在冬天如何戴好一头好帽',
+						imgUrl: 'https://hbimg.huabanimg.com/d500eab4467f91bcde88782f19a8336c2b81ce75bdb1a-kedNbr_fw658',
+						avatar: 'https://hbimg.huabanimg.com/68b31a50db076d4334f9cc608b8a8cfdcd389bcd1755-ix61xr_sq75sf',
+						name: '盒子芥末',
+						isFavor: true,
+						favor: 333
+					}, {
+						title: '潮男Eugene Tong教你在冬天如何戴好一头好帽',
+						imgUrl: 'https://hbimg.huabanimg.com/d500eab4467f91bcde88782f19a8336c2b81ce75bdb1a-kedNbr_fw658',
+						avatar: 'https://hbimg.huabanimg.com/68b31a50db076d4334f9cc608b8a8cfdcd389bcd1755-ix61xr_sq75sf',
+						name: '盒子芥末',
+						isFavor: true,
+						favor: 333
+					}]
+				]
 			}
-			this.list = list;
-			this.listCur = list[0];
-			uni.hideLoading()
 		},
 		methods: {
-			TabSelect(e) {
-				this.tabCur = e.currentTarget.dataset.id;
-				this.mainCur = e.currentTarget.dataset.id;
-				this.verticalNavTop = (e.currentTarget.dataset.id - 1) * 50
+			toMy() {
+				uni.navigateTo({
+					url: '/pages/find/my'
+				});
 			},
-			VerticalMain(e) {
-				// #ifdef MP-ALIPAY
-				   return false  //支付宝小程序暂时不支持双向联动 
-				// #endif
-				let that = this;
-				let tabHeight = 0;
-				if (this.load) {
-					for (let i = 0; i < this.list.length; i++) {
-						let view = uni.createSelectorQuery().select("#main-" + this.list[i].id);
-						view.fields({
-							size: true
-						}, data => {
-							this.list[i].top = tabHeight;
-							tabHeight = tabHeight + data.height;
-							this.list[i].bottom = tabHeight;
-						}).exec();
-					}
-					this.load = false
-				}
-				let scrollTop = e.detail.scrollTop + 10;
-				for (let i = 0; i < this.list.length; i++) {
-					if (scrollTop > this.list[i].top && scrollTop < this.list[i].bottom) {
-						this.verticalNavTop = (this.list[i].id - 1) * 50
-						this.tabCur = this.list[i].id
-						console.log(scrollTop)
-						return false
-					}
-				}
+			toAdd() {
+				uni.navigateTo({
+					url: '/pages/find/add'
+				});
+			},
+			toDetail(index) {
+				uni.navigateTo({
+					url: '/pages/find/detail?id=' + index
+				});
 			}
-		},
+		}
 	}
 </script>
 
 <style>
-	.fixed {
-		position: fixed;
-		z-index: 99;
+	/* 第一排小导航的样式 */
+	.topicBox {
+		padding: 10rpx 10rpx 0;
+		white-space: nowrap;
 	}
-
-	.VerticalNav.nav {
-		width: 200upx;
-		white-space: initial;
-	}
-
-	.VerticalNav.nav .cu-item {
-		width: 100%;
-		text-align: center;
-		background-color: #fff;
-		margin: 0;
-		border: none;
-		height: 50px;
+	.topicBox .cu-item {
+		display: inline-block;
+		border-radius: 10rpx;
+		overflow: hidden;
 		position: relative;
+		margin: 10rpx;
+		padding: 20rpx;
+		width: 200rpx;
+		height: 130rpx;
+		white-space: normal;
+		vertical-align: middle;
 	}
-
-	.VerticalNav.nav .cu-item.cur {
-		background-color: #f1f1f1;
+	.topicBox .cu-item .text-bold {
+		height: 2.4em;
+		font-size: 26rpx;
+		line-height: 1.2em;
+		overflow: hidden;
 	}
-
-	.VerticalNav.nav .cu-item.cur::after {
-		content: "";
-		width: 8upx;
-		height: 30upx;
-		border-radius: 10upx 0 0 10upx;
+	.topicBox .cu-item view {
+		position: relative;
+		z-index: 1;
+	}
+	.text-xs {
+		font-size: 20rpx;
+	}
+	.topicBox .cu-item image, .topic-item image {
 		position: absolute;
-		background-color: currentColor;
+		width: 100%;
+		height: 100%;
+		opacity: 0.3;
 		top: 0;
-		right: 0upx;
-		bottom: 0;
-		margin: auto;
+		left: 0;
+		z-index: 0;
 	}
-
-	.VerticalBox {
+	
+	/* 两列商品的总体样式 */
+	.findCard {
+		display: -webkit-box;
+		display: -webkit-flex;
 		display: flex;
+		padding: 0 10rpx;
 	}
 
-	.VerticalMain {
-		background-color: #f1f1f1;
+
+	.findCard .cu-card {
 		flex: 1;
 	}
+	
+	.cu-card.goods {
+		display: block;
+	}
+	
+	.cu-card {
+		overflow: hidden;
+	}
+	
+	/* 618好物清单标题卡片的样式 */
+	.findCard .cu-card.goods .cu-item {
+		margin: 20rpx 10rpx !important;
+	}
+	.cu-card.goods.col-goods>.cu-item {
+		padding: 0rpx;
+		display: block;
+		border: 0px;
+	}
+	.cu-card.goods>.cu-item {
+		position: relative;
+	}
+	
+	
+	/* 商品展示样式 */
+	
+
+	.findCard .cu-card.goods .cu-item {
+		margin: 20rpx 10rpx !important;
+
+	}
+	.cu-card.goods.col-goods>.cu-item {
+		padding: 0rpx;
+		display: block;
+		border: 0px;
+
+	}
+	.cu-card.goods>.cu-item+.cu-item {
+		border-top: 1rpx solid #EEEEEE;
+
+	}
+	.cu-card.goods.col-goods>.cu-item>image {
+		width: 100%;
+		height: 340rpx;
+		border-bottom-left-radius: 0rpx;
+		border-bottom-right-radius: 0rpx;
+		display: block;
+	
+	}
+	.cu-card.goods>.cu-item>image {
+		width: 200rpx;
+		height: 200rpx;
+		margin-right: 20rpx;
+		border-radius: 6rpx;
+	
+	}
+
+	.findCard .cu-card.goods.col-goods>.cu-item .content .title {
+		font-size: 24rpx;
+		font-weight: 300;
+
+	}
+	.findCard .cu-card.goods.col-goods>.cu-item .content {
+		padding: 10rpx;
+	
+	}
+	.cu-card.goods.no-card>.cu-item .title, .cu-card.goods.col-goods>.cu-item .title {
+		height: 3em;
+		overflow: hidden;
+
+	}
+	.cu-card.goods>.cu-item .title {
+		font-size: 30rpx;
+		font-weight: 900;
+		color: #333333;
+		line-height: 1.4;
+		height: 1.4em;
+		overflow: hidden;
+	}
+
+
+
+
+
+
+	
+
+
+
+	
+
+
+
+
+
+
+
+
+	
 </style>
 
