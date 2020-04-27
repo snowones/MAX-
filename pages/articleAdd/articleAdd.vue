@@ -55,6 +55,7 @@
 
 <script>
     import meditor from '@/components/robin-editor/editor.vue';
+	var _self;
     export default {
         components: {
             meditor
@@ -69,6 +70,9 @@
 				sub_title:'',//文章副标题
             }
         },
+		onLoad() {
+			_self = this;
+		},
         methods: {
 			//打卡文章正文的弹窗
             openEditor: function() { 
@@ -81,15 +85,55 @@
 			//保存富文本编辑内容
             saveEditor: function(e) {
                 this.html = e.html;
+				console.log('这是富文本内容');
 				console.log(e.html);
                 this.hideEditor();
             },
 			//富文本中添加了图片
-            uploadImg: function(img, callback) {
+            async uploadImg(img, callback) {
                 //上传图片逻辑,将图片链接传给回调函数
 				console.log(img);
-                callback(img)
+				
+				let ossSrc = await _self.getOssSrc(img);
+				
+				console.log(ossSrc);
+				
+				//unloadmsg的回调函数  把oss返回的url返回回去
+				callback(ossSrc);
+				//vue强制刷新
+				_self.$forceUpdate();
+				
             },
+			/**
+			 * zyx
+			 * 2020.4.25
+			 * 把图片传入服务器在上传到oss对象存储里
+			 * 这是一个封装好的方法 任何地方上传图片都可以调用
+			 */
+			getOssSrc(img) {
+				return new Promise((resolve) => {
+					const uploadTask  = uni.uploadFile({
+						// url :'http://localhost/tp5/public/index.php/index/index/savaImgToOss', //本地路径
+						url :'http://182.92.64.245/tp5/public/index.php/index/index/savaImgToOss', //远端路径
+						filePath : img,
+						name: 'file',
+						formData : {
+							'user' : 'test'
+						},
+						success: function (res) {
+							let data = JSON.parse(res.data);
+							resolve(data.msg);
+						}
+					});
+					//输出上传进度
+					uploadTask.onProgressUpdate(function (res) {
+						_self.percent = res.progress;
+						console.log('上传进度' + res.progress);
+						console.log('已经上传的数据长度' + res.totalBytesSent);
+						console.log('预期需要上传的数据总长度' + res.totalBytesExpectedToSend);
+					});
+				})
+			},
 			ChooseImage() {
 				uni.chooseImage({
 					count: 4, //默认9

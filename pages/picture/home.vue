@@ -1,6 +1,6 @@
 <template name="picture">
     <view class="index-page">
-        <navigator  v-for="(item,index) in photos" :key="index" :url="'/pages/type/many?id='+ item.id">
+        <navigator  v-for="(item,index) in photos" :key="index" :url="'../pictureDetail/many?id='+ item.id">
             <div class="test-component">
                 <hm-cover-card :options="item"></hm-cover-card>
             </div>
