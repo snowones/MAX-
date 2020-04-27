@@ -99,8 +99,8 @@
 						tempObj.theme = data[i].theme;
 						tempObj.bg = data[i].bg;
 						tempObj.subTitle = data[i].sub_title;
-						tempObj.userName = data[i].user_name;
-						tempObj.userAvatar = data[i].user_avatar;
+						tempObj.userName = data[i].name;
+						tempObj.userAvatar = data[i].avatar_url;
 						tempObj.createTime = data[i].create_time;
 						tempObj.vivewNumber = data[i].vivew_number;
 						tempObj.supportNumber = data[i].support_number;

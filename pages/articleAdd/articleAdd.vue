@@ -92,11 +92,8 @@
 			//富文本中添加了图片
             async uploadImg(img, callback) {
                 //上传图片逻辑,将图片链接传给回调函数
-				console.log(img);
 				
 				let ossSrc = await _self.getOssSrc(img);
-				
-				console.log(ossSrc);
 				
 				//unloadmsg的回调函数  把oss返回的url返回回去
 				callback(ossSrc);
@@ -134,26 +131,52 @@
 					});
 				})
 			},
-			ChooseImage() {
-				uni.chooseImage({
-					count: 4, //默认9
-					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
-					sourceType: ['album'], //从相册选择
-					success: (res) => {
-						if (this.imgList.length != 0) {
-							this.imgList = this.imgList.concat(res.tempFilePaths)
-						} else {
-							this.imgList = res.tempFilePaths
-						}
-					}
-				});
+			/*
+			*zyx 
+			* 2020/4/27
+			* 选择图片 然后上传oss 然后给页面进行图片预览
+			*/
+			async ChooseImage() {
+				let img = await _self.uniChooseImagePromise();
+				//返回的事一个['xxxxxx']
+				img = img[0];
+				let imgOssSrc = await _self.getOssSrc(img);
+				//把图片链接添加到数组里
+				_self.imgList.push(imgOssSrc)
 			},
+			/*
+			*zyx
+			*2020/4/27
+			*封装uni原有的选择图片接口成promise
+			*/
+			uniChooseImagePromise(){
+				return new Promise((resolve)=>{
+					uni.chooseImage({
+						count: 1, //默认9
+						sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+						sourceType: ['album'], //从相册选择
+						success: (res) => {
+							resolve(res.tempFilePaths);
+						}
+					});
+				})
+			},
+			/*
+			* zyx
+			* 2020/4/27
+			* 预览图片
+			*/
 			ViewImage(e) {
 				uni.previewImage({
 					urls: this.imgList,
 					current: e.currentTarget.dataset.url
 				});
 			},
+			/*
+			* zyx
+			* 2020/4/27
+			* 删除图片
+			*/
 			DelImg(e) {
 				uni.showModal({
 					title: '删除图片',
@@ -161,7 +184,7 @@
 					cancelText: '确定',
 					confirmText: '取消',
 					success: res => {
-						if (res.confirm) {
+						if (!res.confirm) {
 							this.imgList.splice(e.currentTarget.dataset.index, 1)
 						}
 					}
@@ -212,24 +235,52 @@
 				}
 			},
 			/*
-			*zyx 2020/4/2
+			*zyx 2020/4/27
 			* 提交表单
 			*/
 			formSubmit(){
-				let {html,title,theme,sub_title} = this;
-				if(!html ||!title ||!theme ||!sub_title){
+				let {html,title,theme,sub_title,imgList} = this;
+				//第一步表单验证 全部的内容必须都填
+				if(!html ||!title ||!theme ||!sub_title||!imgList.length){
 					uni.showToast({
 						title: '请将信息填写完整',
 						icon: 'none',
 						duration: 2000
 					})
+					return 0;
 				}
+				//获取发布者的oepnid
+				let openid = uni.getStorageSync('openId')
+				console.log(openid);
+				
 				console.log(html);
 				console.log(title);
 				console.log(theme);
 				console.log(sub_title);
-				
-				
+				console.log(imgList[0]);
+				//提交表单，把发布的文章内容都存入数据库
+				uni.request({
+				    url: 'http://182.92.64.245/tp5/public/index.php/index/index/saveArticleInfo', //仅为示例，并非真实接口地址。
+				    data: {
+						openid   : openid,
+						title    : title,
+						theme    : theme,
+						bg       : imgList[0],
+						sub_title: sub_title,
+						content  : html
+				    },
+				    success: (res) => {
+				        uni.showToast({
+				            title: '发布成功',
+				            duration: 2000
+				        });
+						//发布成功后跳转回文章主页
+						uni.navigateTo({
+							url: '../article/home'
+						});
+						
+				    }
+				});
 			}
         }
     }
