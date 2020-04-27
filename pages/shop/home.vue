@@ -60,7 +60,8 @@
 					</view>
 				</view>
 			</view>
-			<view class="cu-load margin-bottom" :class="!isLoad?'loading':'over'"></view>
+			<view class="cu-load margin-bottom loading" ></view>
+			<!-- <view style="position: fixed; bottom: 100rpx; left: 320rpx;"><image style="width: 100rpx; height: 100rpx;" src="https://1978246522-max.oss-cn-hangzhou.aliyuncs.com/%E6%B7%BB%E5%8A%A0.png" mode=""></image></view> -->
 		</block>
 		
 	</view>
@@ -166,9 +167,10 @@
 				});
 			},
 			toDetail(index) {
+				console.log(111);
 				uni.navigateTo({
-					url: '/pages/find/detail?id=' + index
-				});
+					url: '../shopDetail/shopDetail?id=' + index
+				})
 			}
 		}
 	}
