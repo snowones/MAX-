@@ -82,20 +82,21 @@
 				html:'',
 				user_avatar:'',
 				listDatas:[
-					{
-						userName:'马东什么？',//评论人名
-						userAvatar:'https://zyx-max.oss-cn-beijing.aliyuncs.com/myhead.jpg',//用户头像地址
-						articleComment:'XGNB',//评论内容
-						createTime:'2020/3/31 15.30',//评论创建时间  这里可以考虑下操作数据  换成当天具体时间 1天前 三天前
-					},
+					// {
+					// 	userName:'马东什么？',//评论人名
+					// 	userAvatar:'https://zyx-max.oss-cn-beijing.aliyuncs.com/myhead.jpg',//用户头像地址
+					// 	articleComment:'XGNB',//评论内容
+					// 	createTime:'2020/3/31 15.30',//评论创建时间  这里可以考虑下操作数据  换成当天具体时间 1天前 三天前
+					// },
 				],
 			};
 		},
 		onLoad(e) {
 			_self = this;
 			let id = e.id;
+			//首先拿到文章的详细信息
 			uni.request({
-			    url: 'http://182.92.64.245/tp5/public/index.php/index/index/selectArticleById', //仅为示例，并非真实接口地址。
+			    url: 'http://182.92.64.245/tp5/public/index.php/index/index/selectArticleById', //根据文章id拿到文章详细信息
 			    data: {
 					id
 			    },
@@ -111,6 +112,36 @@
 					_self.html = data.content;
 					_self.user_avatar = data.avatar_url;
 					console.log(data);
+			    }
+			});
+			//然后拿到文章的全部评论
+			uni.request({
+			    url: 'http://182.92.64.245/tp5/public/index.php/index/index/getArticleCommentById', //根据文章id拿到文章的全部评论
+			    data: {
+					id
+			    },
+			    success: (res) => {
+					//拿到全部评论内容
+					//渲染到页面上
+					console.log(res);
+					//评论不为空
+					if(res.data.length){
+						//创建一个数组存放全部评论
+						let tempArr = [];
+						for(let data of res.data){
+							//创建一个临时对象用来放评论内容
+							let tempObj = {};
+							tempObj.userName = data.name;
+							tempObj.userAvatar = data.avatar_url;
+							tempObj.articleComment = data.content;
+							tempObj.createTime = data.create_time;
+							tempObj.id = data.id;
+							//不直接push进页面数据中 让页面一次渲染完毕
+							tempArr.push(tempObj);
+						}
+						_self.listDatas = tempArr;
+					}
+					
 			    }
 			});
 		},
@@ -150,20 +181,64 @@
 				/*
 				*zyx
 				*2020/4/27
-				*发表评论接口
 				*/
 				uni.request({
 				    url: 'http://182.92.64.245/tp5/public/index.php/index/index/insertArticleComment',
 				    data: {
 						article_id:_self.id,//文章的id
-						user_openid:openid,//发表评论的人的openid
+						user_openid:openid,//发表评论的人的openid*发表评论接口
 						content:_self.comment,//发表的评论的内容
 				    },
 				    success: (res) => {
-					
+						uni.showLoading({
+						    title: '发送中'
+						});
+						//发表完评论 把输入框清空
+						_self.comment = '';
+						_self.commentRefresh();
+						//vue强制刷新
+						_self.$forceUpdate();
+						//这里还是有个小bug 清空了input内的值 但是页面不渲染出来 上面那个方法也没生效
 				    }
 				});
 				
+			},
+			/*
+			*zyx
+			*2020/4/27
+			*刷新评论内容
+			*/
+			commentRefresh(){
+				//拿到文章的全部评论
+				uni.request({
+				    url: 'http://182.92.64.245/tp5/public/index.php/index/index/getArticleCommentById', //根据文章id拿到文章的全部评论
+				    data: {
+						id:_self.id,
+				    },
+				    success: (res) => {
+						//拿到全部评论内容
+						//渲染到页面上
+						//评论不为空
+						if(res.data.length){
+							//创建一个数组存放全部评论
+							let tempArr = [];
+							for(let data of res.data){
+								//创建一个临时对象用来放评论内容
+								let tempObj = {};
+								tempObj.userName = data.name;
+								tempObj.userAvatar = data.avatar_url;
+								tempObj.articleComment = data.content;
+								tempObj.createTime = data.create_time;
+								tempObj.id = data.id;
+								//不直接push进页面数据中 让页面一次渲染完毕
+								tempArr.push(tempObj);
+							}
+							_self.listDatas = tempArr;
+							uni.hideLoading();
+						}
+						
+				    }
+				});
 			}
 		}
 	}
