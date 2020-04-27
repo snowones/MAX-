@@ -260,7 +260,7 @@
 				console.log(imgList[0]);
 				//提交表单，把发布的文章内容都存入数据库
 				uni.request({
-				    url: 'http://182.92.64.245/tp5/public/index.php/index/index/saveArticleInfo', //仅为示例，并非真实接口地址。
+				    url: 'http://182.92.64.245/tp5/public/index.php/index/index/saveArticleInfo', 
 				    data: {
 						openid   : openid,
 						title    : title,

@@ -52,15 +52,15 @@
 			</view>
 			<view class="box add-comment">
 				<view class="cu-bar input">
-					<view class="cu-avatar round" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big91012.jpg);"></view>
+					<view class="cu-avatar round" :style= '"background-image:url(" + user_avatar +" );"'></view>
 					<view class="action">
 						<text class="cuIcon-roundaddfill text-grey"></text>
 					</view>
-					<input class="solid-bottom" maxlength="300" cursor-spacing="10"></input>
+					<input class="solid-bottom" maxlength="20" cursor-spacing="10" @blur="(e) => {this.pushInfo(e)}" :value="comment"></input>
 					<view class="action">
 						<text class="cuIcon-emojifill text-grey"></text>
 					</view>
-					<button class="cu-btn bg-green shadow-blur">发送</button>
+					<button class="cu-btn bg-green shadow-blur" @click="insertComment">发送</button>
 				</view>
 			</view>
 		</view>
@@ -80,6 +80,7 @@
 				bg:'',
 				subTitle:'',//副标题
 				html:'',
+				user_avatar:'',
 				listDatas:[
 					{
 						userName:'马东什么？',//评论人名
@@ -108,6 +109,7 @@
 					_self.bg = data.bg;
 					_self.subTitle = data.sub_title;
 					_self.html = data.content;
+					_self.user_avatar = data.avatar_url;
 					console.log(data);
 			    }
 			});
@@ -116,6 +118,52 @@
 			//切换详情和评论的导航
 			tabSelect(e) {
 				this.TabCur = e.currentTarget.dataset.id;
+			},
+			/*
+			*zyx
+			*2020/4/27
+			*输入评论 
+			*/
+			pushInfo(e){
+				this.comment = e.detail.value;
+				console.log(this.comment);
+			},
+			/*
+			*zyx
+			*2020/4/27
+			*点击发表评论
+			*/
+			insertComment(){
+				console.log('点击了发送');
+				//如果评论内容为空不能发表
+				console.log(_self.comment);
+				if(!_self.comment){
+					uni.showToast({
+						title: '评论不能为空',
+						icon: 'none',
+						duration: 2000
+					})
+					return 0;
+				}
+				//拿到发表的评论的openid
+				let openid = uni.getStorageSync('openId');
+				/*
+				*zyx
+				*2020/4/27
+				*发表评论接口
+				*/
+				uni.request({
+				    url: 'http://182.92.64.245/tp5/public/index.php/index/index/insertArticleComment',
+				    data: {
+						article_id:_self.id,//文章的id
+						user_openid:openid,//发表评论的人的openid
+						content:_self.comment,//发表的评论的内容
+				    },
+				    success: (res) => {
+					
+				    }
+				});
+				
 			}
 		}
 	}
