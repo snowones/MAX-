@@ -69,43 +69,51 @@
 </template>
 
 <script>
+	var _self;
 	export default {
 		data() {
 			return {
 				TabCur: 0,
-				id:1,//文章id
-				title:'CNDOTA BEST DOTA',//标题
-				theme:'LGD加油',//主题
-				bg:'https://zyx-max.oss-cn-beijing.aliyuncs.com/8EF8AD9B531939ACE327C0677150AD16.jpg',
-				subTitle:'那些以为走不出来的低谷和绝望 或许只是一时的乌云和阴霾。',//副标题
-				html:'<p wx:nodeid="121">DA联赛今天最后一场，由EHOME对阵Ocean,第一局EHOME中上两路打出巨大优势，虽然中期送出几次小团灭，但核心德鲁伊通过漫长的发育拆掉很多外塔，全员经济领先，最后以一次漂亮的肉山团直接拿盾锁定胜局，第二局EHOME和海洋互刷了很久，最后无解肥巨魔野区1打3撑到神谕赶到完成反杀，成功击溃了海洋，恭喜EHOME获得胜利。</p><p wx:nodeid="136"><img src="http://tmp/wx919da7d945914699.o6zAJswFPQgu8VmWSC9ZwBLMzrio.e2look4J3PHj079dfc8b1801086a1257731f48c7e39d.jpg" alt="图像" wx:nodeid="138"></p><p wx:nodeid="144">EHOME在天辉，海洋在夜魇，EHOME一手人马，之后用祸乱之源克制滚滚，补推进核德鲁伊，控场凤凰和中路紫猫，海洋一手补核心小狗打肉核，最后出5号位双头龙。分路方面上路人马凤凰打滚滚，中路紫猫对影魔，下路德鲁伊祸乱之源对小狗小小双头龙。',
+				id:'',//文章id
+				title:'',//标题
+				theme:'',//主题
+				bg:'',
+				subTitle:'',//副标题
+				html:'',
 				listDatas:[
 					{
-						userName:'马东什么？',//文章作者名
+						userName:'马东什么？',//评论人名
 						userAvatar:'https://zyx-max.oss-cn-beijing.aliyuncs.com/myhead.jpg',//用户头像地址
 						articleComment:'XGNB',//评论内容
 						createTime:'2020/3/31 15.30',//评论创建时间  这里可以考虑下操作数据  换成当天具体时间 1天前 三天前
-					},{
-						userName:'马东什么？',//文章作者名
-						userAvatar:'https://zyx-max.oss-cn-beijing.aliyuncs.com/myhead.jpg',//用户头像地址
-						articleComment:'我是一条评论',//评论内容
-						createTime:'2020/3/31 15.30'
-					},{
-						userName:'马东什么？',//文章作者名
-						userAvatar:'https://zyx-max.oss-cn-beijing.aliyuncs.com/myhead.jpg',//用户头像地址
-						articleComment:'斗鱼有幸得到你们两位卧龙凤雏',//评论内容
-						createTime:'2020/3/31 15.30'
-					},{
-						userName:'马东什么？',//文章作者名
-						userAvatar:'https://zyx-max.oss-cn-beijing.aliyuncs.com/myhead.jpg',//用户头像地址
-						articleComment:'我是一条评论',//评论内容
-						createTime:'2020/3/31 15.30'
 					},
-					
 				],
 			};
 		},
+		onLoad(e) {
+			_self = this;
+			let id = e.id;
+			uni.request({
+			    url: 'http://182.92.64.245/tp5/public/index.php/index/index/selectArticleById', //仅为示例，并非真实接口地址。
+			    data: {
+					id
+			    },
+			    success: (res) => {
+					//拿到全部文章的详细数据
+					//渲染到页面上
+					let data = res.data[0];
+					_self.id = data.id;
+					_self.title = data.title;
+					_self.theme = data.theme;
+					_self.bg = data.bg;
+					_self.subTitle = data.sub_title;
+					_self.html = data.content;
+					console.log(data);
+			    }
+			});
+		},
 		methods: {
+			//切换详情和评论的导航
 			tabSelect(e) {
 				this.TabCur = e.currentTarget.dataset.id;
 			}

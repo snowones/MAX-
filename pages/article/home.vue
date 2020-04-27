@@ -16,7 +16,7 @@
 					{{item.theme}}
 				</view>	
 			</view>
-			<view class="cu-card case" :class="isCard?'no-card':''"  @click="articleDetail">
+			<view class="cu-card case" :class="isCard?'no-card':''"  @click="articleDetail(item)">
 				<view class="cu-item shadow">
 					<view class="image">
 						<image :src="item.bg"  mode="widthFix"></image>
@@ -66,19 +66,7 @@
 						vivewNumber:30,//文章观看量
 						supportNumber:20,//文章点赞数
 						commentNumber:10,//文章评论数
-					},
-					{
-						id:1,//文章id
-						title:'CNDOTA BEST DOTA',//标题
-						theme:'LGD加油',//主题
-						bg:'https://zyx-max.oss-cn-beijing.aliyuncs.com/8EF8AD9B531939ACE327C0677150AD16.jpg',
-						subTitle:'那些以为走不出来的低谷和绝望 或许只是一时的乌云和阴霾。',//副标题
-						userName:'马东什么？',//文章作者名
-						userAvatar:'https://zyx-max.oss-cn-beijing.aliyuncs.com/myhead.jpg',//用户头像地址
-						createTime:'2020/3/30',//发表日期
-						vivewNumber:30,//文章观看量
-						supportNumber:20,//文章点赞数
-						commentNumber:10,//文章评论数
+						allData:[],//全部数据
 					},
 				]
 			};
@@ -105,6 +93,7 @@
 						tempObj.vivewNumber = data[i].vivew_number;
 						tempObj.supportNumber = data[i].support_number;
 						tempObj.commentNumber = data[i].comment_number;
+						tempObj.allData = data[i];
 						tempArr.push(tempObj);
 					}
 					this.articleDatas = tempArr;
@@ -128,9 +117,11 @@
 			*zyx/2020/3.31
 			* 点击事件 进入文章详情
 			*/
-			articleDetail(){
+			articleDetail(item){
+				//跳转文章详情时把这个帖子的id传进去
+				let id = item.id;
 				uni.navigateTo({
-					url:'../articleDetail/articleDetail'
+					url:'../articleDetail/articleDetail?id=' + id
 				})
 			}
 		}
