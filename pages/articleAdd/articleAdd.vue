@@ -231,7 +231,7 @@
 				        });
 						//发布成功后跳转回文章主页
 						uni.navigateTo({
-							url: '../article/home'
+							url: '../index/index?data=article'
 						});
 						
 				    }

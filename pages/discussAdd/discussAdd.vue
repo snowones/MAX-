@@ -174,7 +174,7 @@
 				        });
 						//发布成功后跳转回论坛主页
 						uni.navigateTo({
-							url: '../discuss/home'
+							url: '../index/index?data=discuss'
 						});
 						
 				    }
