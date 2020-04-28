@@ -92,8 +92,8 @@
 			//富文本中添加了图片
             async uploadImg(img, callback) {
                 //上传图片逻辑,将图片链接传给回调函数
-				
-				let ossSrc = await _self.getOssSrc(img);
+				//上传图片的方法封装到了全局 返回值是一个promise
+				let ossSrc = await global.getOssSrc(img);
 				
 				//unloadmsg的回调函数  把oss返回的url返回回去
 				callback(ossSrc);
@@ -101,65 +101,20 @@
 				_self.$forceUpdate();
 				
             },
-			/**
-			 * zyx
-			 * 2020.4.25
-			 * 把图片传入服务器在上传到oss对象存储里
-			 * 这是一个封装好的方法 任何地方上传图片都可以调用
-			 */
-			getOssSrc(img) {
-				return new Promise((resolve) => {
-					const uploadTask  = uni.uploadFile({
-						// url :'http://localhost/tp5/public/index.php/index/index/savaImgToOss', //本地路径
-						url :'http://182.92.64.245/tp5/public/index.php/index/index/savaImgToOss', //远端路径
-						filePath : img,
-						name: 'file',
-						formData : {
-							'user' : 'test'
-						},
-						success: function (res) {
-							let data = JSON.parse(res.data);
-							resolve(data.msg);
-						}
-					});
-					//输出上传进度
-					uploadTask.onProgressUpdate(function (res) {
-						_self.percent = res.progress;
-						console.log('上传进度' + res.progress);
-						console.log('已经上传的数据长度' + res.totalBytesSent);
-						console.log('预期需要上传的数据总长度' + res.totalBytesExpectedToSend);
-					});
-				})
-			},
 			/*
 			*zyx 
 			* 2020/4/27
 			* 选择图片 然后上传oss 然后给页面进行图片预览
 			*/
 			async ChooseImage() {
-				let img = await _self.uniChooseImagePromise();
+				//选择图片的函数 封装成promise到全局 传入num一次选择图片的数量
+				let img = await global.uniChooseImagePromise(1);
 				//返回的事一个['xxxxxx']
 				img = img[0];
-				let imgOssSrc = await _self.getOssSrc(img);
+				//上传图片的方法封装到了全局 返回值是一个promise
+				let imgOssSrc = await global.getOssSrc(img);
 				//把图片链接添加到数组里
 				_self.imgList.push(imgOssSrc)
-			},
-			/*
-			*zyx
-			*2020/4/27
-			*封装uni原有的选择图片接口成promise
-			*/
-			uniChooseImagePromise(){
-				return new Promise((resolve)=>{
-					uni.chooseImage({
-						count: 1, //默认9
-						sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
-						sourceType: ['album'], //从相册选择
-						success: (res) => {
-							resolve(res.tempFilePaths);
-						}
-					});
-				})
 			},
 			/*
 			* zyx

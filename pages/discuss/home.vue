@@ -94,7 +94,7 @@
 			*/
 			addArticle(){
 				uni.navigateTo({
-					url:'../articleAdd/articleAdd'
+					url:'../discussAdd/discussAdd'
 				})
 			},
 			/*

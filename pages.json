@@ -51,6 +51,10 @@
             "path" : "pages/shopDetail/shopDetail",
             "style" : {}
         }
+        ,{
+            "path" : "pages/discussAdd/discussAdd",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"mp-alipay": {
