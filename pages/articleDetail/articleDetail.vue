@@ -93,6 +93,8 @@
 		},
 		onLoad(e) {
 			_self = this;
+			//评论框内的头像是当前登录用户的头像
+			_self.user_avatar = uni.getStorageSync('avatarUrl');
 			let id = e.id;
 			//首先拿到文章的详细信息
 			uni.request({
@@ -110,7 +112,6 @@
 					_self.bg = data.bg;
 					_self.subTitle = data.sub_title;
 					_self.html = data.content;
-					_self.user_avatar = data.avatar_url;
 					console.log(data);
 			    }
 			});
