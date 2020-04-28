@@ -17,16 +17,36 @@
 </template>
 
 <script>
+	var _self;
 	export default {
 		data() {
 			return {
-				data:[],//帖子详细数据
+				data:{},//帖子详细数据
 			};
 		},
 		onLoad(e) {
-			console.log(e)
-			this.data = JSON.parse(e.data);
-			console.log(this.data);
+			_self = this;
+			let id = e.id;
+			//首先拿到帖子的详细信息
+			uni.request({
+			    url: 'http://182.92.64.245/tp5/public/index.php/index/index/selectDiscussById', //根据帖子id拿到帖子详细信息
+			    data: {
+					id
+			    },
+			    success: (res) => {
+					//拿到帖子的详细数据
+					//渲染到页面上
+					let data = res.data[0];
+					//临时对象存放数据
+					let tempData = {};
+					tempData.id = data.id;
+					tempData.title = data.title;
+					tempData.content = data.content;
+					tempData.contentImg = JSON.parse(data.content_img);
+					tempData.user_avatar = data.avatar_url;
+					_self.data =  tempData;
+			    }
+			});
 		},
 		methods: {
 			

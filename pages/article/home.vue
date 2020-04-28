@@ -54,20 +54,20 @@
 			return {
 				isCard: true,
 				articleDatas:[
-					{
-						id:1,//文章id
-						title:'CNDOTA BEST DOTA',//标题
-						theme:'LGD加油',//主题
-						bg:'https://1978246522-max.oss-cn-hangzhou.aliyuncs.com/u%3D1717847492%2C1311910060%26fm%3D26%26gp%3D0.jpg',
-						subTitle:'那些以为走不出来的低谷和绝望 或许只是一时的乌云和阴霾。',//副标题
-						userName:'马东什么？',//文章作者名
-						userAvatar:'https://zyx-max.oss-cn-beijing.aliyuncs.com/myhead.jpg',//用户头像地址
-						createTime:'2020/3/30',//发表日期
-						vivewNumber:30,//文章观看量
-						supportNumber:20,//文章点赞数
-						commentNumber:10,//文章评论数
-						allData:[],//全部数据
-					},
+					// {
+					// 	id:1,//文章id
+					// 	title:'CNDOTA BEST DOTA',//标题
+					// 	theme:'LGD加油',//主题
+					// 	bg:'https://1978246522-max.oss-cn-hangzhou.aliyuncs.com/u%3D1717847492%2C1311910060%26fm%3D26%26gp%3D0.jpg',
+					// 	subTitle:'那些以为走不出来的低谷和绝望 或许只是一时的乌云和阴霾。',//副标题
+					// 	userName:'马东什么？',//文章作者名
+					// 	userAvatar:'https://zyx-max.oss-cn-beijing.aliyuncs.com/myhead.jpg',//用户头像地址
+					// 	createTime:'2020/3/30',//发表日期
+					// 	vivewNumber:30,//文章观看量
+					// 	supportNumber:20,//文章点赞数
+					// 	commentNumber:10,//文章评论数
+					// 	allData:[],//全部数据
+					// },
 				]
 			};
 		},
