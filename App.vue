@@ -27,83 +27,6 @@
 				}
 			})
 
-			Vue.prototype.ColorList = [{
-					title: '嫣红',
-					name: 'red',
-					color: '#e54d42'
-				},
-				{
-					title: '桔橙',
-					name: 'orange',
-					color: '#f37b1d'
-				},
-				{
-					title: '明黄',
-					name: 'yellow',
-					color: '#fbbd08'
-				},
-				{
-					title: '橄榄',
-					name: 'olive',
-					color: '#8dc63f'
-				},
-				{
-					title: '森绿',
-					name: 'green',
-					color: '#39b54a'
-				},
-				{
-					title: '天青',
-					name: 'cyan',
-					color: '#1cbbb4'
-				},
-				{
-					title: '海蓝',
-					name: 'blue',
-					color: '#0081ff'
-				},
-				{
-					title: '姹紫',
-					name: 'purple',
-					color: '#6739b6'
-				},
-				{
-					title: '木槿',
-					name: 'mauve',
-					color: '#9c26b0'
-				},
-				{
-					title: '桃粉',
-					name: 'pink',
-					color: '#e03997'
-				},
-				{
-					title: '棕褐',
-					name: 'brown',
-					color: '#a5673f'
-				},
-				{
-					title: '玄灰',
-					name: 'grey',
-					color: '#8799a3'
-				},
-				{
-					title: '草灰',
-					name: 'gray',
-					color: '#aaaaaa'
-				},
-				{
-					title: '墨黑',
-					name: 'black',
-					color: '#333333'
-				},
-				{
-					title: '雅白',
-					name: 'white',
-					color: '#ffffff'
-				},
-			]
-
 		},
 		onShow: function() {
 			console.log('App Show')
@@ -113,6 +36,55 @@
 		}
 
 	}
+	/*
+	*zyx
+	*2020/4/28
+	*封装功能函数 上传图片到oss服务器里
+	*传入图片
+	*/
+	global.getOssSrc = async function(img) {
+		return new Promise((resolve) => {
+			const uploadTask  = uni.uploadFile({
+				// url :'http://localhost/tp5/public/index.php/index/index/savaImgToOss', //本地路径
+				url :'http://182.92.64.245/tp5/public/index.php/index/index/savaImgToOss', //远端路径
+				filePath : img,
+				name: 'file',
+				formData : {
+					'user' : 'test'
+				},
+				success: function (res) {
+					let data = JSON.parse(res.data);
+					resolve(data.msg);
+				}
+			});
+			//输出上传进度
+			uploadTask.onProgressUpdate(function (res) {
+				console.log('上传进度' + res.progress);
+				console.log('已经上传的数据长度' + res.totalBytesSent);
+				console.log('预期需要上传的数据总长度' + res.totalBytesExpectedToSend);
+			});
+		})
+	}
+	
+	/*
+	*zyx
+	*2020/4/27
+	*封装uni原有的选择图片接口成promise
+	* 传入选择图片的数量(手机选择图片) 1-9张
+	*/
+    global.uniChooseImagePromise = async function(num) {
+		return new Promise((resolve)=>{
+			uni.chooseImage({
+				count: num, //默认9
+				sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+				sourceType: ['album'], //从相册选择
+				success: (res) => {
+					resolve(res.tempFilePaths);
+				}
+			});
+		})
+	}
+	
 </script>
 
 <style>
