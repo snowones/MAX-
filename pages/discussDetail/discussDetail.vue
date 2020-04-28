@@ -84,17 +84,19 @@
 	export default {
 		data() {
 			return {
+				id:'',
 				data:{},//帖子详细数据 具体数据看onload
 				commendDatas:[
-					{
-						id:1,
-						user_avatar:'https://zyx-max.oss-cn-beijing.aliyuncs.com/myhead.jpg',//用户头像连接
-						user_name:'马东什么',//用户姓名
-						content:'我们还行吧',//评论内容
-						create_time:'2019年8月30日',//评论时间
-					}
+					// {
+					// 	id:1,
+					// 	user_avatar:'https://zyx-max.oss-cn-beijing.aliyuncs.com/myhead.jpg',//用户头像连接
+					// 	user_name:'马东什么',//用户姓名
+					// 	content:'我们还行吧',//评论内容
+					// 	create_time:'2019年8月30日',//评论时间
+					// }
 				],
 				avatarUrl:'',//当前用户的头像
+				comment:''//发表评论的评论内容
 			};
 		},
 		onLoad(e) {
@@ -102,6 +104,7 @@
 			//评论框内用到这个头像了
 			_self.avatarUrl = uni.getStorageSync('avatarUrl');
 			let id = e.id;
+			_self.id = id;
 			//首先拿到帖子的详细信息
 			uni.request({
 			    url: 'http://182.92.64.245/tp5/public/index.php/index/index/selectDiscussById', //根据帖子id拿到帖子详细信息
@@ -159,6 +162,96 @@
 			});
 		},
 		methods: {
+			/*
+			*zyx
+			*2020/4/27
+			*输入评论 
+			*/
+			pushInfo(e){
+				this.comment = e.detail.value;
+				console.log(this.comment);
+			},
+			/*
+			*zyx
+			*2020/4/27
+			*点击发表评论
+			*/
+			insertComment(){
+				console.log('点击了发送');
+				//如果评论内容为空不能发表
+				console.log(_self.comment);
+				if(!_self.comment){
+					uni.showToast({
+						title: '评论不能为空',
+						icon: 'none',
+						duration: 2000
+					})
+					return 0;
+				}
+				//拿到发表的评论的openid
+				let openid = uni.getStorageSync('openId');
+				/*
+				*zyx
+				*2020/4/28
+				*/
+				uni.request({
+				    url: 'http://182.92.64.245/tp5/public/index.php/index/index/insertDiscussComment',
+				    data: {
+						discuss_id:_self.id,//文章的id
+						user_openid:openid,//发表评论的人的openid*发表评论接口
+						content:_self.comment,//发表的评论的内容
+				    },
+				    success: (res) => {
+						console.log(res);
+						uni.showLoading({
+						    title: '发送中'
+						});
+						//发表完评论 把输入框清空
+						_self.comment = '';
+						_self.commentRefresh();
+						//vue强制刷新
+						_self.$forceUpdate();
+						//这里还是有个小bug 清空了input内的值 但是页面不渲染出来 上面那个方法也没生效
+				    }
+				});
+				
+			},
+			/*
+			*zyx
+			*2020/4/28
+			*刷新评论内容
+			*/
+			commentRefresh(){
+				//拿到帖子的全部评论
+				uni.request({
+				    url: 'http://182.92.64.245/tp5/public/index.php/index/index/getDiscussCommentById', //根据帖子id拿到帖子的全部评论
+				    data: {
+						id:_self.id,
+				    },
+				    success: (res) => {
+						//拿到全部评论内容
+						//渲染到页面上
+						//评论不为空
+						if(res.data.length){
+							//创建一个数组存放全部评论
+							let tempArr = [];
+							for(let data of res.data){
+								//创建一个临时对象用来放评论内容
+								let tempObj = {};
+								tempObj.id = data.id;
+								tempObj.user_avatar = data.avatar_url;
+								tempObj.user_name = data.name;
+								tempObj.content = data.content;
+								tempObj.create_time = data.create_time;
+								//不直接push进页面数据中 让页面一次渲染完毕
+								tempArr.push(tempObj);
+							}
+							_self.commendDatas = tempArr;
+							uni.hideLoading();
+						}
+				    }
+				});
+			}
 			
 		},
 	}
