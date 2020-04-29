@@ -25,44 +25,62 @@
 <script>
 import lazyLoad from '../../components/lazyLoad/index';
 import lazyLoadPlugin from '../../plugins/lazyLoad/js/index'
-
+var _self;
 export default {
     data () {
         return {
             scrollId: "scroll",
             list: [
-                "x",
-                "/static/dog/1.jpg",
-                "/static/dog/2.jpg",
-                "/static/dog/3.jpg",
-                "/static/dog/4.jpg",
-                "/static/dog/5.jpg",
-                "/static/dog/6.jpg",
-                "xx",
-                "/static/cat/1.jpg",
-                "/static/cat/2.jpg",
-                "/static/cat/3.jpg",
-                "xxx",
+                // "x",
+                // "/static/dog/1.jpg",
+                // "/static/dog/2.jpg",
+                // "/static/dog/3.jpg",
+                // "/static/dog/4.jpg",
+                // "/static/dog/5.jpg",
+                // "/static/dog/6.jpg",
+                // "xx",
+                // "/static/cat/1.jpg",
+                // "/static/cat/2.jpg",
+                // "/static/cat/3.jpg",
+                // "xxx",
             ]
         }
     },
-
+	onLoad(e) {
+		_self = this;
+		let id = e.id;
+		//首先拿到帖子的详细信息
+		uni.request({
+		    url: 'http://182.92.64.245/tp5/public/index.php/index/index/selectPictureById', //根据相册id拿到相册全部照片
+		    data: {
+				id
+		    },
+		    success: (res) => {
+				//拿到帖子的详细数据
+				//渲染到页面上
+				let data = res.data[0];
+				let picture = JSON.parse(data.contents);
+				//临时对象存放数据 不直接去修改数据 让数据一次性渲染提高性能
+				console.log(picture);
+				_self.list =  picture;
+				//这个页面暂时有点小bug 就是因为图片是懒加载 如果只是一两张图片就不触发滑动动作 图片就不加载 
+		    }
+		});
+		
+	},
     methods: {
         scroll () {
             lazyLoadPlugin.scroll();
         }
     },
-
     mounted () {
         lazyLoadPlugin.init({
             id: '#scroll'
         });
     },
-
     components: {
         lazyLoad
     },
-
     destroyed () {
         lazyLoadPlugin.destroy();
     }

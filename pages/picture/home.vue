@@ -20,23 +20,42 @@ export default {
     data () {
         return {
 			photos:[
-				{
-					id:1,
-					entryPic:'https://1978246522-max.oss-cn-hangzhou.aliyuncs.com/u%3D1717847492%2C1311910060%26fm%3D26%26gp%3D0.jpg',
-					title: '单色摄影',
-					text: '456张风景照片',
-					shoucang:'https://1978246522-max.oss-cn-hangzhou.aliyuncs.com/shoucang_0.png'
-				},
-				{
-					id:2,
-					entryPic:'/static/hm-cover-card/images/img_25361_0_1.png',
-					title: '单色摄影',
-					text: '456张风景照片',
-					shoucang:'https://1978246522-max.oss-cn-hangzhou.aliyuncs.com/shoucang_1.png'
-				}
+				// {
+				// 	id:1,
+				// 	entryPic:'https://1978246522-max.oss-cn-hangzhou.aliyuncs.com/u%3D1717847492%2C1311910060%26fm%3D26%26gp%3D0.jpg',
+				// 	title: '单色摄影',
+				// 	text: '456张风景照片',
+				// 	shoucang:'https://1978246522-max.oss-cn-hangzhou.aliyuncs.com/shoucang_0.png',
+				// 	// shoucang:'https://1978246522-max.oss-cn-hangzhou.aliyuncs.com/shoucang_1.png'
+				// },
 			],
         }
     },
+	mounted(){
+		//组件加载时获取全部数据
+		uni.request({
+		    url: 'http://182.92.64.245/tp5/public/index.php/index/index/selectAllPicture', 
+		    data: {
+		    },
+		    success: (res) => {
+		        console.log(res.data);
+				let data = res.data;
+				let tempArr = []; //临时数组 存放articleDatas
+				for(let i in data){
+					let tempObj = {}; //临时对象存放每一个帖子的具体数据
+					
+					let picture = JSON.parse(data[i].contents);
+					tempObj.id = data[i].id;
+					tempObj.title = data[i].name;
+					tempObj.entryPic = picture[0];
+					tempObj.shoucang = 'https://1978246522-max.oss-cn-hangzhou.aliyuncs.com/shoucang_1.png';//shoucang_0.png
+					tempObj.text = picture.length + '张照片';
+					tempArr.push(tempObj);
+				}
+				this.photos = tempArr;
+		    }
+		});
+	},
 	methods:{
 		/*
 		*zyx/2020/3.31
