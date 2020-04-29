@@ -55,6 +55,10 @@
             "path" : "pages/discussAdd/discussAdd",
             "style" : {}
         }
+        ,{
+            "path" : "pages/pictureAdd/pictureAdd",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"mp-alipay": {

@@ -1,11 +1,12 @@
 <template name="shop">
 	<view>
-		<!-- <swiper class="screen-swiper round-dot" :indicator-dots="true" :circular="true" :autoplay="true" interval="5000"
-		 duration="500">
-			<swiper-item v-for="(item,index) in 4" :key="index">
-				<image :src="'https://zyx-max.oss-cn-beijing.aliyuncs.com/dota'+index+ '.jpg'" mode="aspectFill"></image>
-			</swiper-item>
-		</swiper> -->
+		<view class="article-edit">
+			<image 
+				src="https://1978246522-max.oss-cn-hangzhou.aliyuncs.com/%E5%8F%91%E5%B8%83%E5%95%86%E5%93%81.png" 
+				class="article-edit-image"
+				@click="addArticle"
+				></image>
+		</view>
 		<block>
 			<scroll-view scroll-x class="topicBox">
 				<view v-for="(item,index) in topicList" :key="index" :class="'bg-' + item.color" class="cu-item shadow">

@@ -2,7 +2,7 @@
 	<view>
 		<view class="article-edit">
 			<image 
-				src="https://zyx-max.oss-cn-beijing.aliyuncs.com/eidt.png" 
+				src="https://1978246522-max.oss-cn-hangzhou.aliyuncs.com/%E5%8F%91%E8%A1%A8%E6%96%87%E7%AB%A0.png" 
 				class="article-edit-image"
 				@click="addArticle"
 				></image>

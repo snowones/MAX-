@@ -4,7 +4,7 @@
 			<image 
 				src="https://zyx-max.oss-cn-beijing.aliyuncs.com/eidt.png" 
 				class="article-edit-image"
-				@click="addArticle"
+				@click="addDiscuss"
 				></image>
 		</view>
 		<view class="cu-bar bg-white solid-bottom">
@@ -106,7 +106,7 @@
 			*zyx/2020/3.31
 			* 点击事件 添加帖子
 			*/
-			addArticle(){
+			addDiscuss(){
 				uni.navigateTo({
 					url:'../discussAdd/discussAdd'
 				})
