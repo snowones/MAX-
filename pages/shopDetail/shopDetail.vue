@@ -1,25 +1,15 @@
 <template>
 	<view>
-		<!-- <custom :transparent="true" :top="scrollTop" :isBack="true">
-			<block slot="right">
-				<navigator class="action roundIcon" url="/pages/notice/notice" hover-class="none">
-					<view class="icon-notice">
-						<view class="cu-tag badge round"></view>
-					</view>
-				</navigator>
-			</block>
-		</custom> -->
 		<!-- 导航条 -->
 		<cu-custom bgColor="bg-black" :isBack="true">
 			<block slot="backText">返回</block>
 			<block slot="content">商品详情</block>
 		</cu-custom>
 		<!--  产品图 -->
-		<!-- <view class="bg-white" :style="[{height:StatusBar + 'px'}]"></view> -->
 		<swiper class="screen-swiper" :indicator-dots="false" :circular="true" :autoplay="true" :interval="5000" duration="500"
 		 style="height:750upx" @change="swiperChange">
 			<swiper-item v-for="(item,index) in swiperList" :key="index">
-				<image :src="item.url" mode="aspectFill" v-if="item.type=='image'"></image>
+				<image :src="item" mode="aspectFill"></image>
 			</swiper-item>
 		</swiper>
 		<view class='swiper-tag'>
@@ -40,8 +30,8 @@
 		<view class='flex goodsHead'>
 			<view class='bg-red padding-sm flex-sub'>
 				<view class='price'>
-					<text class='text-price'>149.00</text>
-					<text class='text-price text-del'>169.00</text>
+					<text class='text-price'>{{price}}</text>
+					<text class='text-price text-del'>{{discount}}</text>
 				</view>
 				<view class="text-sm">累计已拼4567件/仅剩2467件</view>
 			</view>
@@ -59,14 +49,14 @@
 		<!--  商品简介 -->
 		<view class='bg-white padding'>
 			<view class='text-xl text-black text-bold text-line2cut'>
-				李宁男鞋跑步鞋2019年春夏季新款减震耐磨休闲鞋运动鞋 新基础黑/银色 男42(265MM) 李宁夏季运动短袖/短裤
+				{{detail}}
 			</view>
-			<view class='text-grey margin-top-sm'>李宁官方授权，支持防伪验货，假一赔十，下单赠运费险，购物无忧【加购收藏，优先发货】</view>
+			<view class='text-grey margin-top-sm'>{{remarks}}</view>
 			<view class='padding-sm bg-orange light flex align-center radius margin-top-sm'>
 				<view class="flex-sub text-sm">
-					<text class="text-black"> 升级云店，价格再优惠，购物可返现高达</text> 1000 <text class="text-black"> 元</text>
+					<text class="text-black"> 卖家联系方式:</text> {{contact}} <text class="text-black"></text>
 				</view>
-				<button class="cu-btn bg-orange sm">立即升级</button>
+				<button class="cu-btn bg-orange sm">立即联系</button>
 			</view>
 		</view>
 
@@ -90,6 +80,7 @@
 </template>
 
 <script>
+	var _self;
 	export default {
 		data() {
 			return {
@@ -99,28 +90,39 @@
 				ModalClose: this.CustomBar + 35 + uni.upx2px(690),
 				modalName: null,
 				swiperCur: 0,
-				swiperList: [{
-					id: 0,
-					type: 'image',
-					url: 'https://img14.360buyimg.com/n1/s546x546_jfs/t1/17986/16/15158/138069/5cadc00eE4a1f4c49/b19abe2839f7a12b.jpg'
-				}, {
-					id: 1,
-					type: 'image',
-					url: 'https://img14.360buyimg.com/n1/s546x546_jfs/t1/35980/26/890/157465/5cadc00eE60333685/d0ed8e2d8bcc3a55.jpg',
-				}, {
-					id: 2,
-					type: 'image',
-					url: 'https://img14.360buyimg.com/n1/s546x546_jfs/t1/33552/24/2333/187869/5cadc00eEbea4d7aa/59bcde6c03d4d4e3.jpg'
-				}, {
-					id: 3,
-					type: 'image',
-					url: 'https://img14.360buyimg.com/n1/s546x546_jfs/t1/10936/5/6625/109240/5c24462fE8518daa9/199d809a2f8f24c9.jpg'
-				}],
-				TypeModal: 'type'
+				swiperList: ['https://img14.360buyimg.com/n1/s546x546_jfs/t1/17986/16/15158/138069/5cadc00eE4a1f4c49/b19abe2839f7a12b.jpg','https://img14.360buyimg.com/n1/s546x546_jfs/t1/35980/26/890/157465/5cadc00eE60333685/d0ed8e2d8bcc3a55.jpg',,'https://img14.360buyimg.com/n1/s546x546_jfs/t1/33552/24/2333/187869/5cadc00eEbea4d7aa/59bcde6c03d4d4e3.jpg','https://img14.360buyimg.com/n1/s546x546_jfs/t1/10936/5/6625/109240/5c24462fE8518daa9/199d809a2f8f24c9.jpg'],//展示图片
+				TypeModal: 'type',
+				price:'200',//优惠前价格
+				discount:'160',//优惠后价格
+				detail:'李宁男鞋跑步鞋2019年春夏季新款减震耐磨休闲鞋运动鞋 新基础黑/银色 男42(265MM) 李宁夏季运动短袖/短裤',//描述
+				contact:'111',//卖家联系方式
+				remarks:'hhh',//商品备注
 			}
 		},
-		onLoad() {
-			
+		onLoad(e) {
+			_self = this;
+			let id = e.id;
+			//首先拿到帖子的详细信息
+			uni.request({
+			    url: 'http://182.92.64.245/tp5/public/index.php/index/index/selectGoodsById', //根据相册id拿到相册全部照片
+			    data: {
+					id
+			    },
+			    success: (res) => {
+					//拿到帖子的详细数据
+					//渲染到页面上
+					let data = res.data[0];
+					
+					console.log(data);
+					let picture = JSON.parse(data.image);
+					this.swiperList = picture;
+					this.price = data.price;
+					this.discount = data.discount;
+					this.detail = data.name + ":" + data.detail;
+					this.contact = data.contact;
+					this.remarks = data.remarks;
+			    }
+			});
 		},
 		methods: {
 			showModal(e) {

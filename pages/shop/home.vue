@@ -4,7 +4,7 @@
 			<image 
 				src="https://1978246522-max.oss-cn-hangzhou.aliyuncs.com/%E5%8F%91%E5%B8%83%E5%95%86%E5%93%81.png" 
 				class="article-edit-image"
-				@click="addArticle"
+				@click="addShop"
 				></image>
 		</view>
 		<block>
@@ -41,7 +41,7 @@
 						</view>
 						<image src="https://image.weilanwl.com/qhShop/topicbg.png" mode="aspectFill"></image>
 					</view>
-					<view class="cu-item shadow bg-white" v-for="(item,index) in card" :key="index" @tap="toDetail(index)">
+					<view class="cu-item shadow bg-white" v-for="(item,index) in card" :key="index" @tap="toDetail(item.id)">
 						<image :src="item.imgUrl" mode="widthFix"></image>
 						<view class="content">
 							<view class="title">
@@ -156,21 +156,60 @@
 				]
 			}
 		},
+		mounted(){
+			//组件加载时获取全部数据
+			uni.request({
+			    url: 'http://182.92.64.245/tp5/public/index.php/index/index/selectAllGoods', 
+			    data: {
+			    },
+			    success: (res) => {
+			        console.log(res.data);
+					//这里渲染比较特殊 需要把数据分成两份渲染 一排一排渲染
+					let data = res.data;
+					let length = data.length/2;
+					let tempListArr = []; //临时数组 存放list
+					//两排数据
+					let listData1 = [];
+					let listData2 = [];
+					data.map((item,index)=>{
+						let tempObj = {}; //临时对象存放每一个帖子的具体数据
+						//数据处理
+						console.log(item.image);
+						let picture = JSON.parse(item.image);
+						console.log(picture);
+						tempObj.id = item.id;
+						tempObj.title = item.detail;
+						tempObj.imgUrl = picture[0];
+						tempObj.avatar = item.avatar_url;
+						tempObj.name = item.name;
+						tempObj.isFavor = true;
+						tempObj.favor = 100;
+						
+						console.log(length)
+						if(index<length){
+							//前一半放第一个数组里
+							listData1.push(tempObj);
+						}else{
+							//后一半放后面那个数组里
+							listData2.push(tempObj);
+						}
+					})
+					tempListArr[0] = listData1;
+					tempListArr[1] = listData2;
+					console.log(tempListArr);
+					this.list = tempListArr;
+			    },
+			});
+		},
 		methods: {
-			toMy() {
+			addShop() {
 				uni.navigateTo({
-					url: '/pages/find/my'
+					url: '../shopAdd/shopAdd'
 				});
 			},
-			toAdd() {
+			toDetail(id) {
 				uni.navigateTo({
-					url: '/pages/find/add'
-				});
-			},
-			toDetail(index) {
-				console.log(111);
-				uni.navigateTo({
-					url: '../shopDetail/shopDetail?id=' + index
+					url: '../shopDetail/shopDetail?id=' + id
 				})
 			}
 		}
