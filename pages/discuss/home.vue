@@ -1,5 +1,9 @@
 <template name='discuss'>
 	<view>
+		<cu-custom bgColor="bg-black" :isBack="true" v-if="type == 1">
+			<block slot="backText">返回</block>
+			<block slot="content">我的帖子</block>
+		</cu-custom>
 		<view class="article-edit">
 			<image 
 				src="https://zyx-max.oss-cn-beijing.aliyuncs.com/eidt.png" 
@@ -56,6 +60,7 @@
 	export default {
 		data() {
 			return {
+				type:0,
 				discussDatas:[
 					// {
 					// 	id:1,//帖子id
@@ -72,34 +77,49 @@
 				]
 			};
 		},
+		onLoad(e) {
+			console.log(e);
+			console.log('我进入了onload');
+			//如果e存在就说明从我的里进入的
+			if(e.type){
+				this.type = 1;
+			}
+		},
 		mounted(){
-			//组件加载时获取全部数据
-			uni.request({
-			    url: 'http://182.92.64.245/tp5/public/index.php/index/index/selectAllDiscuss', 
-			    data: {
-			    },
-			    success: (res) => {
-			        console.log(res.data);
-					let data = res.data;
-					let tempArr = []; //临时数组 存放articleDatas
-					for(let i in data){
-						let tempObj = {}; //临时对象存放每一个帖子的具体数据
-						tempObj.id = data[i].id;
-						tempObj.title = data[i].title;
-						tempObj.content = data[i].content;
-						tempObj.contentImg = JSON.parse(data[i].content_img);
-						tempObj.userName = data[i].name;
-						tempObj.userAvatar = data[i].avatar_url;
-						tempObj.createTime = data[i].create_time;
-						tempObj.vivewNumber = data[i].vivew_number;
-						tempObj.supportNumber = data[i].support_number;
-						tempObj.commentNumber = data[i].comment_number;
-						tempObj.allData = data[i];
-						tempArr.push(tempObj);
-					}
-					this.discussDatas = tempArr;
-			    }
-			});
+			
+			console.log('我进入了mounted');
+			let data;
+			if(!this.type){
+				//这里是主页进入触发
+				//组件加载时获取全部数据
+				uni.request({
+				    url: 'http://182.92.64.245/tp5/public/index.php/index/index/selectAllDiscuss', 
+				    data: {
+				    },
+				    success: (res) => {
+				        console.log(res.data);
+						data = res.data;
+						this.processData(data);
+				    }
+				});
+			}else{
+				//这里是个人中心页面进入触发
+				//组件加载时获取全部数据
+				let openid = uni.getStorageSync('openId')
+				uni.request({
+				    url: 'http://182.92.64.245/tp5/public/index.php/index/index/selectUserDiscuss', 
+				    data: {
+						openid,
+				    },
+				    success: (res) => {
+				        console.log(res.data);
+						data = res.data;
+						this.processData(data);
+				    }
+				});
+			}
+			
+			
 		},
 		methods: {
 			/*
@@ -120,7 +140,30 @@
 				uni.navigateTo({
 					url:'../discussDetail/discussDetail?id=' + id
 				})
-			}
+			},
+			/*
+			*zyx/2020/5.6
+			* 处理数据
+			*/
+		   processData(data){
+			   let tempArr = []; //临时数组 存放articleDatas
+			   for(let i in data){
+			   	let tempObj = {}; //临时对象存放每一个帖子的具体数据
+			   	tempObj.id = data[i].id;
+			   	tempObj.title = data[i].title;
+			   	tempObj.content = data[i].content;
+			   	tempObj.contentImg = JSON.parse(data[i].content_img);
+			   	tempObj.userName = data[i].name;
+			   	tempObj.userAvatar = data[i].avatar_url;
+			   	tempObj.createTime = data[i].create_time;
+			   	tempObj.vivewNumber = data[i].vivew_number;
+			   	tempObj.supportNumber = data[i].support_number;
+			   	tempObj.commentNumber = data[i].comment_number;
+			   	tempObj.allData = data[i];
+			   	tempArr.push(tempObj);
+			   }
+			   this.discussDatas = tempArr;
+		   }
 		}
 	}
 </script>
