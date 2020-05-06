@@ -37,68 +37,57 @@
 			</view>
 		</view>
 		<view class="navHead bg-white shadow">
-			<navigator url="/pages/sign/sign" hover-class="none" class="flex-sub">
+			<navigator url="../discussAdd/discussAdd" hover-class="none" class="flex-sub">
 				<view class='text-xxl icon-zhengguifapiao text-orange'></view>
-				<view class="text-sm margin-top-xs">签到</view>
+				<view class="text-sm margin-top-xs">发表帖子</view>
 			</navigator>
-			<navigator url="/pages/wallet/wallet" hover-class="none" class="flex-sub solid-left">
+			<navigator url="../articleAdd/articleAdd" hover-class="none" class="flex-sub solid-left">
 				<view class='text-xxl icon-qianbao text-red'></view>
-				<view class="text-sm margin-top-xs">钱包</view>
+				<view class="text-sm margin-top-xs">发表文章</view>
 			</navigator>
-			<navigator url="/pages/footprint/footprint" hover-class="none" class="flex-sub solid-left">
-				<view class='text-xxl icon-footprint text-mauve'></view>
-				<view class="text-sm margin-top-xs">足迹</view>
+			<navigator url="../shopAdd/shopAdd" hover-class="none" class="flex-sub solid-left">
+				<view class='text-xxl icon-qianbao text-red'></view>
+				<view class="text-sm margin-top-xs">发布闲置</view>
+			</navigator>
+			<navigator url="../pictureAdd/pictureAdd" hover-class="none" class="flex-sub solid-left">
+				<view class='text-xxl icon-qianbao text-red'></view>
+				<view class="text-sm margin-top-xs">发布相册</view>
 			</navigator>
 		</view>
 		
-		
-		<view class="cu-bar bg-white margin-top" @tap="toOrder()">
-			<view class='action'><text class="icon-titles text-orange"></text>我的订单</view>
-			<view class='action'>
-				<view class='text-gray text-sm'>
-					查看全部
-					<text class='icon-right'></text>
-				</view>
-			</view>
-		</view>
-		<view class="cu-list grid col-5 no-border solid-top">
-			<view class="cu-item" @tap="toOrder(1)">
-				<view class='icon-pay text-gray'>
-					<view class="cu-tag badge" v-if="order.unpaid!=0">{{order.unpaid}}</view>
-				</view>
-				<text>待付款</text>
-			</view>
-			<view class="cu-item" @tap="toOrder(2)">
-				<view class='icon-deliver text-gray'>
-					<view class="cu-tag badge" v-if="order.unship!=0">{{order.unship}}</view>
-				</view>
-				<text>待发货</text>
-			</view>
-			<view class="cu-item" @tap="toOrder(3)">
-				<view class='icon-send text-gray'>
-					<view class="cu-tag badge" v-if="order.unrecv!=0">{{order.unrecv}}</view>
-				</view>
-				<text>待收货</text>
-			</view>
-			<view class="cu-item" @tap="toOrder(4)">
-				<view class='icon-evaluate text-gray'>
-					<view class="cu-tag badge" v-if="order.uncomment!=0">{{order.uncomment}}</view>
-				</view>
-				<text>待评价</text>
-			</view>
-			<view class="cu-item" @tap="toRefund(5)">
-				<view class='icon-refund text-gray'></view>
-				<text>退款/售后</text>
-			</view>
-		</view>
-
-
 		
 		<view class="cu-bar bg-white margin-top">
-			<view class='action'><text class="icon-titles text-orange"></text>我的服务</view>
+			<view class='action'><text class="icon-titles text-orange"></text>我的</view>
 		</view>
-
-		
+		<view class="cu-list grid col-4 no-border solid-top">
+			<view class="cu-item" @tap="tolist(1)">
+				<view class='icon-pay text-gray'>
+					<view class="cu-tag badge"></view>
+				</view>
+				<text>我的帖子</text>
+			</view>
+			<view class="cu-item" @tap="tolist(2)">
+				<view class='icon-deliver text-gray'>
+					<view class="cu-tag badge"></view>
+				</view>
+				<text>我的文章</text>
+			</view>
+			<view class="cu-item" @tap="tolist(3)">
+				<view class='icon-send text-gray'>
+					<view class="cu-tag badge"></view>
+				</view>
+				<text>我的闲置</text>
+			</view>
+			<view class="cu-item" @tap="tolist(4)">
+				<view class='icon-evaluate text-gray'>
+					<view class="cu-tag badge"></view>
+				</view>
+				<text>我的相册</text>
+			</view>
+		</view>
+		<view class="cu-bar bg-white margin-top">
+			<view class='action'><text class="icon-titles text-orange"></text>联系客服</view>
+		</view>
 	</view>
 </template>
 
@@ -107,8 +96,6 @@
 		data() {
 			return {
 				isLogin: false,
-				modalName: null,
-				order:[],
 				nickName:'',//用户名称
 				avatarUrl:'',//用户头像链接
 				openId:'',//用户openid
@@ -126,10 +113,21 @@
 			}
 		},
 		methods: {
-			toOrder(nav) {
+			//跳转到列表页面
+			tolist(nav) {
+				let url;
+				if(nav == 1){
+					url = "../discuss/home";
+				}else if(nav == 2) {
+					url = "../article/home";
+				}else if(nav == 3) {
+					url = "../shop/home";
+				}else if(nav == 4) {
+					url = "../picture/home";
+				}
 				uni.navigateTo({
-					url: '/pages/order/list?nav=' + nav,
-				});
+					url: url + "?type=home"
+				})
 			},
 			/**
 			 * zyx
