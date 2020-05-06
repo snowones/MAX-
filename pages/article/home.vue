@@ -1,5 +1,9 @@
 <template name='article'>
 	<view>
+		<cu-custom bgColor="bg-black" :isBack="true" v-if="type == 1">
+			<block slot="backText">返回</block>
+			<block slot="content">我的文章</block>
+		</cu-custom>
 		<view class="article-edit">
 			<image 
 				src="https://1978246522-max.oss-cn-hangzhou.aliyuncs.com/%E5%8F%91%E8%A1%A8%E6%96%87%E7%AB%A0.png" 
@@ -52,6 +56,7 @@
 	export default {
 		data() {
 			return {
+				type:0,//0是正常主页进入的，1是从我的页面进入
 				isCard: true,
 				articleDatas:[
 					// {
@@ -71,36 +76,73 @@
 				]
 			};
 		},
+		onLoad(e) {
+			console.log(e);
+			console.log('我进入了onload');
+			//如果e存在就说明从我的里进入的
+			if(e.type){
+				this.type = 1;
+			}
+		},
 		mounted(){
-			uni.request({
-			    url: 'http://182.92.64.245/tp5/public/index.php/index/index/selectAllArticle', //仅为示例，并非真实接口地址。
-			    data: {
-			    },
-			    success: (res) => {
-			        console.log(res.data);
-					let data = res.data;
-					let tempArr = []; //临时数组 存放articleDatas
-					for(let i in data){
-						let tempObj = {}; //临时对象存放每一个文章的具体数据
-						tempObj.id = data[i].id;
-						tempObj.title = data[i].title;
-						tempObj.theme = data[i].theme;
-						tempObj.bg = data[i].bg;
-						tempObj.subTitle = data[i].sub_title;
-						tempObj.userName = data[i].name;
-						tempObj.userAvatar = data[i].avatar_url;
-						tempObj.createTime = data[i].create_time;
-						tempObj.vivewNumber = data[i].vivew_number;
-						tempObj.supportNumber = data[i].support_number;
-						tempObj.commentNumber = data[i].comment_number;
-						tempObj.allData = data[i];
-						tempArr.push(tempObj);
+			
+			console.log('我进入了mounted');
+			let data;
+			if(!this.type){
+				//这里是主页进入触发
+				//组件加载时获取全部数据
+				uni.request({
+					url: 'http://182.92.64.245/tp5/public/index.php/index/index/selectAllArticle', //仅为示例，并非真实接口地址。
+					data: {
+					},
+					success: (res) => {
+						console.log(res.data);
+						let data = res.data;
+						this.processData(data);
 					}
-					this.articleDatas = tempArr;
-			    }
-			});
+				});
+			}else{
+				//这里是个人中心页面进入触发
+				//组件加载时获取全部数据
+				let openid = uni.getStorageSync('openId');
+				uni.request({
+					url: 'http://182.92.64.245/tp5/public/index.php/index/index/selectUserArticle', //仅为示例，并非真实接口地址。
+					data: {
+						openid,
+					},
+					success: (res) => {
+						console.log(res.data);
+						let data = res.data;
+						this.processData(data);
+					}
+				});
+			}
 		},
 		methods: {
+			/*
+			*zyx/2020/5.6
+			* 处理数据
+			*/
+			processData(data){
+				let tempArr = []; //临时数组 存放articleDatas
+				for(let i in data){
+					let tempObj = {}; //临时对象存放每一个文章的具体数据
+					tempObj.id = data[i].id;
+					tempObj.title = data[i].title;
+					tempObj.theme = data[i].theme;
+					tempObj.bg = data[i].bg;
+					tempObj.subTitle = data[i].sub_title;
+					tempObj.userName = data[i].name;
+					tempObj.userAvatar = data[i].avatar_url;
+					tempObj.createTime = data[i].create_time;
+					tempObj.vivewNumber = data[i].vivew_number;
+					tempObj.supportNumber = data[i].support_number;
+					tempObj.commentNumber = data[i].comment_number;
+					tempObj.allData = data[i];
+					tempArr.push(tempObj);
+				}
+				this.articleDatas = tempArr;
+			},
 			IsCard(e) {
 				this.isCard = e.detail.value
 			},
