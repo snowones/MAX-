@@ -161,15 +161,12 @@
 			}
 		},
 		onLoad(e) {
-			console.log(e);
-			console.log('我进入了onload');
 			//如果e存在就说明从我的里进入的
 			if(e.type){
 				this.type = 1;
 			}
 		},
 		mounted(){
-			console.log('我进入了mounted');
 			let data;
 			if(!this.type){
 				//这里是主页进入触发
@@ -179,7 +176,6 @@
 					data: {
 					},
 					success: (res) => {
-						console.log(res.data);
 						//这里渲染比较特殊 需要把数据分成两份渲染 一排一排渲染
 						let data = res.data;
 						this.processData(data);
@@ -195,7 +191,6 @@
 						openid,
 					},
 					success: (res) => {
-						console.log(res.data);
 						//这里渲染比较特殊 需要把数据分成两份渲染 一排一排渲染
 						let data = res.data;
 						this.processData(data);
@@ -227,9 +222,7 @@
 				data.map((item,index)=>{
 					let tempObj = {}; //临时对象存放每一个帖子的具体数据
 					//数据处理
-					console.log(item.image);
 					let picture = JSON.parse(item.image);
-					console.log(picture);
 					tempObj.id = item.id;
 					tempObj.title = item.detail;
 					tempObj.imgUrl = picture[0];
@@ -238,7 +231,6 @@
 					tempObj.isFavor = true;
 					tempObj.favor = 100;
 					
-					console.log(length)
 					if(index<length){
 						//前一半放第一个数组里
 						listData1.push(tempObj);
@@ -249,7 +241,6 @@
 				})
 				tempListArr[0] = listData1;
 				tempListArr[1] = listData2;
-				console.log(tempListArr);
 				this.list = tempListArr;
 			}
 		}

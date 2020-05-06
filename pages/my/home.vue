@@ -146,7 +146,6 @@
 									code: response.code
 								},
 								success: res => {
-									console.log(res);
 									resolve(res.data.openid);
 								},
 							});
@@ -170,7 +169,6 @@
 							avatar_url: avatarUrl,//用户微信头像链接
 						},
 						success: res => {
-							console.log(res);
 							resolve(res);
 						},
 					});
@@ -192,21 +190,16 @@
 					// 说明用户点击了同意
 					// userInfo下面有 avatarUrl city country gender  language nickName province
 					let userInfo = e.detail.userInfo; 
-					console.log(userInfo);
 					try {
 						uni.setStorageSync('nickName', userInfo.nickName);
 						uni.setStorageSync('avatarUrl', userInfo.avatarUrl);
 						_self.nickName = userInfo.nickName;
 						_self.avatarUrl = userInfo.avatarUrl;
-						console.log(_self.nickName);
-						console.log(_self.avatarUrl);
 					} catch (e) {
-						console.log(e);
 					}
 					//等待调用微信登录接口拿到openid
 					let openId = await _self.getOpenId();
 					uni.setStorageSync('openId', openId);
-					console.log(openId)
 					//然后把用户信息全部存入数据库
 					let savaRes = await this.saveUserInfo(openId,userInfo.nickName,userInfo.avatarUrl);
 					_self.openId = openId;

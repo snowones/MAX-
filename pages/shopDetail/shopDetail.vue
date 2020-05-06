@@ -113,7 +113,6 @@
 					//渲染到页面上
 					let data = res.data[0];
 					
-					console.log(data);
 					let picture = JSON.parse(data.image);
 					this.swiperList = picture;
 					this.price = data.price;

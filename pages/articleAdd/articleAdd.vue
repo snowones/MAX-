@@ -85,8 +85,6 @@
 			//保存富文本编辑内容
             saveEditor: function(e) {
                 this.html = e.html;
-				console.log('这是富文本内容');
-				console.log(e.html);
                 this.hideEditor();
             },
 			//富文本中添加了图片
@@ -206,13 +204,6 @@
 				}
 				//获取发布者的oepnid
 				let openid = uni.getStorageSync('openId')
-				console.log(openid);
-				
-				console.log(html);
-				console.log(title);
-				console.log(theme);
-				console.log(sub_title);
-				console.log(imgList[0]);
 				//提交表单，把发布的文章内容都存入数据库
 				uni.request({
 				    url: 'http://182.92.64.245/tp5/public/index.php/index/index/saveArticleInfo', 

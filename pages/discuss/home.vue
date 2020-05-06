@@ -78,16 +78,12 @@
 			};
 		},
 		onLoad(e) {
-			console.log(e);
-			console.log('我进入了onload');
 			//如果e存在就说明从我的里进入的
 			if(e.type){
 				this.type = 1;
 			}
 		},
 		mounted(){
-			
-			console.log('我进入了mounted');
 			let data;
 			if(!this.type){
 				//这里是主页进入触发
@@ -97,7 +93,6 @@
 				    data: {
 				    },
 				    success: (res) => {
-				        console.log(res.data);
 						data = res.data;
 						this.processData(data);
 				    }
@@ -112,7 +107,6 @@
 						openid,
 				    },
 				    success: (res) => {
-				        console.log(res.data);
 						data = res.data;
 						this.processData(data);
 				    }

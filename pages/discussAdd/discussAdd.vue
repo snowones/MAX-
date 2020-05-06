@@ -153,10 +153,6 @@
 				}
 				//获取发布者的oepnid
 				let openid = uni.getStorageSync('openId')
-				console.log(openid);
-				console.log(title);
-				console.log(content);
-				console.log(imgList);
 				//提交表单，把发布的帖子内容都存入数据库
 				uni.request({
 				    url: 'http://182.92.64.245/tp5/public/index.php/index/index/saveDiscussInfo', 
@@ -167,7 +163,6 @@
 						content_img : JSON.stringify(imgList),
 				    },
 				    success: (res) => {
-						console.log(res);
 				        uni.showToast({
 				            title: '发布成功',
 				            duration: 2000

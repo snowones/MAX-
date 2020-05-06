@@ -137,9 +137,6 @@
 				}
 				//获取发布者的oepnid
 				let openid = uni.getStorageSync('openId')
-				console.log(openid);
-				console.log(name);
-				console.log(imgList);
 				//提交表单，
 				
 				uni.request({
@@ -150,7 +147,6 @@
 						user_openid : openid,
 				    },
 				    success: (res) => {
-						console.log(res);
 				        uni.showToast({
 				            title: '发布成功',
 				            duration: 2000

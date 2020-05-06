@@ -113,7 +113,6 @@
 					_self.bg = data.bg;
 					_self.subTitle = data.sub_title;
 					_self.html = data.content;
-					console.log(data);
 			    }
 			});
 			//然后拿到文章的全部评论
@@ -125,7 +124,6 @@
 			    success: (res) => {
 					//拿到全部评论内容
 					//渲染到页面上
-					console.log(res);
 					//评论不为空
 					if(res.data.length){
 						//创建一个数组存放全部评论
@@ -159,7 +157,6 @@
 			*/
 			pushInfo(e){
 				this.comment = e.detail.value;
-				console.log(this.comment);
 			},
 			/*
 			*zyx
@@ -167,9 +164,7 @@
 			*点击发表评论
 			*/
 			insertComment(){
-				console.log('点击了发送');
 				//如果评论内容为空不能发表
-				console.log(_self.comment);
 				if(!_self.comment){
 					uni.showToast({
 						title: '评论不能为空',

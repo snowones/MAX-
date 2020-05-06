@@ -55,7 +55,6 @@
 		},
 		onLoad(e) {
 			//添加页面添加成功后跳转到对应主页，这时跳转不能直接跳转到相应页面 需要跳到主页由主页进行分发
-			console.log(e);
 			if(e.data){
 				this.PageCur = e.data;
 			}

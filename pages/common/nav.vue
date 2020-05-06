@@ -45,10 +45,8 @@
 			}
 		},
 		updated() {
-			// console.log(this.config)
 		},
 		mounted() {
-			// console.log(this.config)
 			
 		},
 		props:{
@@ -63,7 +61,6 @@
 		},
 		methods:{
 			back_(){
-				console.log("我是返回按钮");
 				uni.navigateBack({
 					delta:1
 				});

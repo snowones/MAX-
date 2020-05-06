@@ -139,7 +139,6 @@
 			    success: (res) => {
 					//拿到全部评论内容
 					//渲染到页面上
-					console.log(res);
 					//评论不为空
 					if(res.data.length){
 						//创建一个数组存放全部评论
@@ -169,7 +168,6 @@
 			*/
 			pushInfo(e){
 				this.comment = e.detail.value;
-				console.log(this.comment);
 			},
 			/*
 			*zyx
@@ -177,9 +175,7 @@
 			*点击发表评论
 			*/
 			insertComment(){
-				console.log('点击了发送');
 				//如果评论内容为空不能发表
-				console.log(_self.comment);
 				if(!_self.comment){
 					uni.showToast({
 						title: '评论不能为空',
@@ -202,7 +198,6 @@
 						content:_self.comment,//发表的评论的内容
 				    },
 				    success: (res) => {
-						console.log(res);
 						uni.showLoading({
 						    title: '发送中'
 						});

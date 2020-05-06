@@ -61,7 +61,6 @@ export default {
 				let data = res.data[0];
 				let picture = JSON.parse(data.contents);
 				//临时对象存放数据 不直接去修改数据 让数据一次性渲染提高性能
-				console.log(picture);
 				_self.list =  picture;
 				//这个页面暂时有点小bug 就是因为图片是懒加载 如果只是一两张图片就不触发滑动动作 图片就不加载 
 		    }
