@@ -85,7 +85,6 @@
 			}
 		},
 		mounted(){
-			
 			console.log('我进入了mounted');
 			let data;
 			if(!this.type){

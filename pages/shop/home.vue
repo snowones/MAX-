@@ -1,5 +1,9 @@
 <template name="shop">
 	<view>
+		<cu-custom bgColor="bg-black" :isBack="true" v-if="type == 1">
+			<block slot="backText">返回</block>
+			<block slot="content">我的闲置</block>
+		</cu-custom>
 		<view class="article-edit">
 			<image 
 				src="https://1978246522-max.oss-cn-hangzhou.aliyuncs.com/%E5%8F%91%E5%B8%83%E5%95%86%E5%93%81.png" 
@@ -8,7 +12,7 @@
 				></image>
 		</view>
 		<block>
-			<scroll-view scroll-x class="topicBox">
+			<scroll-view scroll-x class="topicBox"  v-if="type == 0">
 				<view v-for="(item,index) in topicList" :key="index" :class="'bg-' + item.color" class="cu-item shadow">
 					<view class="text-bold text-line2cut">
 						#{{item.title}}#
@@ -26,7 +30,7 @@
 			</scroll-view>
 			<view class="findCard">
 				<view class="cu-card goods col-goods" v-for="(card,id) in list" :key="id">
-					<view class="cu-item shadow topic-item" style="background-color: #F37B1D; color: #FFFFFF;">
+					<view class="cu-item shadow topic-item" style="background-color: #F37B1D; color: #FFFFFF;" v-if="type == 0">
 						<view class="text-center padding-tb-lg">
 							<view>#618必囤好物清单#</view>
 							<view class="text-xs margin-top-xs">发布推荐 得奖品</view>
@@ -71,6 +75,7 @@
 	export default {
 		data() {
 			return {
+				type:0,//0是正常主页进入的，1是从我的页面进入
 				isLoad: true,
 				topicList: [{
 					title: '好物撩一撩',
@@ -155,50 +160,48 @@
 				]
 			}
 		},
+		onLoad(e) {
+			console.log(e);
+			console.log('我进入了onload');
+			//如果e存在就说明从我的里进入的
+			if(e.type){
+				this.type = 1;
+			}
+		},
 		mounted(){
-			//组件加载时获取全部数据
-			uni.request({
-			    url: 'http://182.92.64.245/tp5/public/index.php/index/index/selectAllGoods', 
-			    data: {
-			    },
-			    success: (res) => {
-			        console.log(res.data);
-					//这里渲染比较特殊 需要把数据分成两份渲染 一排一排渲染
-					let data = res.data;
-					let length = data.length/2;
-					let tempListArr = []; //临时数组 存放list
-					//两排数据
-					let listData1 = [];
-					let listData2 = [];
-					data.map((item,index)=>{
-						let tempObj = {}; //临时对象存放每一个帖子的具体数据
-						//数据处理
-						console.log(item.image);
-						let picture = JSON.parse(item.image);
-						console.log(picture);
-						tempObj.id = item.id;
-						tempObj.title = item.detail;
-						tempObj.imgUrl = picture[0];
-						tempObj.avatar = item.avatar_url;
-						tempObj.name = item.name;
-						tempObj.isFavor = true;
-						tempObj.favor = 100;
-						
-						console.log(length)
-						if(index<length){
-							//前一半放第一个数组里
-							listData1.push(tempObj);
-						}else{
-							//后一半放后面那个数组里
-							listData2.push(tempObj);
-						}
-					})
-					tempListArr[0] = listData1;
-					tempListArr[1] = listData2;
-					console.log(tempListArr);
-					this.list = tempListArr;
-			    },
-			});
+			console.log('我进入了mounted');
+			let data;
+			if(!this.type){
+				//这里是主页进入触发
+				//组件加载时获取全部数据
+				uni.request({
+					url: 'http://182.92.64.245/tp5/public/index.php/index/index/selectAllGoods', 
+					data: {
+					},
+					success: (res) => {
+						console.log(res.data);
+						//这里渲染比较特殊 需要把数据分成两份渲染 一排一排渲染
+						let data = res.data;
+						this.processData(data);
+					},
+				});
+			}else{
+				//这里是个人中心页面进入触发
+				//组件加载时获取全部数据
+				let openid = uni.getStorageSync('openId');
+				uni.request({
+					url: 'http://182.92.64.245/tp5/public/index.php/index/index/selectUserGoods', 
+					data: {
+						openid,
+					},
+					success: (res) => {
+						console.log(res.data);
+						//这里渲染比较特殊 需要把数据分成两份渲染 一排一排渲染
+						let data = res.data;
+						this.processData(data);
+					},
+				});
+			}
 		},
 		methods: {
 			addShop() {
@@ -210,6 +213,44 @@
 				uni.navigateTo({
 					url: '../shopDetail/shopDetail?id=' + id
 				})
+			},
+			/*
+			*zyx/2020/5.6
+			* 处理数据
+			*/
+			processData(data){
+				let length = data.length/2;
+				let tempListArr = []; //临时数组 存放list
+				//两排数据
+				let listData1 = [];
+				let listData2 = [];
+				data.map((item,index)=>{
+					let tempObj = {}; //临时对象存放每一个帖子的具体数据
+					//数据处理
+					console.log(item.image);
+					let picture = JSON.parse(item.image);
+					console.log(picture);
+					tempObj.id = item.id;
+					tempObj.title = item.detail;
+					tempObj.imgUrl = picture[0];
+					tempObj.avatar = item.avatar_url;
+					tempObj.name = item.name;
+					tempObj.isFavor = true;
+					tempObj.favor = 100;
+					
+					console.log(length)
+					if(index<length){
+						//前一半放第一个数组里
+						listData1.push(tempObj);
+					}else{
+						//后一半放后面那个数组里
+						listData2.push(tempObj);
+					}
+				})
+				tempListArr[0] = listData1;
+				tempListArr[1] = listData2;
+				console.log(tempListArr);
+				this.list = tempListArr;
 			}
 		}
 	}
