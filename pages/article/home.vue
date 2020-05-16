@@ -24,7 +24,7 @@
 				<view class="cu-item shadow">
 					<view class="image">
 						<image :src="item.bg"  mode="widthFix"></image>
-						<view class="cu-tag bg-blue">Ti9</view>
+						<view class="cu-tag bg-blue">最新</view>
 						<view class="cu-bar bg-shadeBottom"> <text class="text-cut">{{item.subTitle}}</text></view>
 					</view>
 					<view class="cu-list menu-avatar">
