@@ -5,7 +5,7 @@
 		<articleSub v-if="PageCur=='article'"></articleSub>
 		<shop v-if="PageCur=='shop'"></shop>
 		<picture v-if="PageCur=='picture'"></picture>
-		<my  v-if="PageCur=='my'"></my>
+		<my v-if="PageCur=='my'"></my>
 		<view class="cu-bar tabbar bg-white shadow foot">
 			<view class="action" @click="NavChange" data-cur="discuss">
 				<view class='cuIcon-cu-image'>

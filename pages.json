@@ -67,6 +67,14 @@
             "path" : "pages/bookKeepPage/bookKeepingMain/bookKeepingMain",
             "style" : {}
         }
+        ,{
+            "path" : "pages/bookKeepPage/bookKeepingDetail/bookKeepingDetail",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/bookKeepPage/bookKeepingAction/bookKeepingAction",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"mp-alipay": {
@@ -86,6 +94,14 @@
 					{
 						"name": "文章", //模式名称
 						"path": "pages/article/home"
+					},
+					{
+						"name": "记账本详情", //模式名称
+						"path": "pages/bookKeepPage/bookKeepingDetail/bookKeepingDetail"
+					},
+					{
+						"name": "记账本主页", //模式名称
+						"path": "pages/bookKeepPage/bookKeepingAction/bookKeepingAction"
 					}
 		]
 	}
