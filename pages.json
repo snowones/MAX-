@@ -75,6 +75,10 @@
             "path" : "pages/bookKeepPage/bookKeepingAction/bookKeepingAction",
             "style" : {}
         }
+        ,{
+            "path" : "pages/bookKeepPage/bookKeepingAdd/bookKeepingAdd",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"mp-alipay": {
@@ -102,6 +106,10 @@
 					{
 						"name": "记账本主页", //模式名称
 						"path": "pages/bookKeepPage/bookKeepingAction/bookKeepingAction"
+					},
+					{
+						"name": "记账", //模式名称
+						"path": "pages/bookKeepPage/bookKeepingAdd/bookKeepingAdd"
 					}
 		]
 	}

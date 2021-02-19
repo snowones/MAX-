@@ -113,7 +113,7 @@
 					bgColor: '#fff',
 					scrollLeft: 0
 				},
-				chartList: [{ keyw: '01', value: 100 }, { keyw: '02', value: 120 }, { keyw: '03', value: 110 },{ keyw: '01', value: 100 }, { keyw: '02', value: 120 }, { keyw: '03', value: 110 },{ keyw: '01', value: 100 },],
+				chartList: [{ keyw: '01', value: 300 }, { keyw: '02', value: 120 }, { keyw: '03', value: 400 },{ keyw: '01', value: 100 }, { keyw: '02', value: 120 }, { keyw: '03', value: 110 },{ keyw: '01', value: 100 },],
 				chartItems: {
 					keyw: '03',
 					value: 110
@@ -122,7 +122,9 @@
 		},
 		methods: {
 			addrecord(){
-				console.log(1);
+				uni.navigateTo({
+					url:'../bookKeepingAdd/bookKeepingAdd'
+				})
 			}
 		}
 	}
