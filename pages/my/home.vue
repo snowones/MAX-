@@ -88,6 +88,9 @@
 		<view class="cu-bar bg-white margin-top">
 			<view class='action'><text class="icon-titles text-orange"></text>联系客服</view>
 		</view>
+		<view class="cu-bar bg-white" @click="gotoBookKeeping(item)">
+			<view class='action'><text class="icon-titles text-orange"></text>记账本</view>
+		</view>
 	</view>
 </template>
 
@@ -127,6 +130,17 @@
 				}
 				uni.navigateTo({
 					url: url + "?type=home"
+				})
+			},
+			/*
+				zyx
+				2021/2/19
+				开发一个记账本模块做为日常使用
+				这里先作为临时入口
+			*/
+			gotoBookKeeping(){
+				uni.navigateTo({
+					url:'../bookKeepPage/bookKeepingMain/bookKeepingMain'
 				})
 			},
 			/**

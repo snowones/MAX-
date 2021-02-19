@@ -63,6 +63,10 @@
             "path" : "pages/shopAdd/shopAdd",
             "style" : {}
         }
+        ,{
+            "path" : "pages/bookKeepPage/bookKeepingMain/bookKeepingMain",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"mp-alipay": {
